@@ -56,7 +56,20 @@ export default function Home() {
             title="Ingresar"
             btnType="button"
             containerStyles="text-primary-blue rounded-full bg-white min-w-[130px]"
-        />
+            />
+          </div>
+          <div className="max-w-sm rounded overflow-hidden shadow-lg">
+            <Image src="/instalacion.jpg" alt="card" width={480} height={180} />
+            <div className="px-6 py-4">
+              <div className="font-bold text-xl mb-2">Instalación</div>
+              <p className="text-gray-700 text-base">
+              La instalación de equipos médicos permite poner en funcionamiento los equipos especializados utilizados en entornos médicos. Esta instalación se realiza siguiendo protocolos específicos y normas de seguridad para garantizar que los equipos operen de manera eficiente y segura.</p>
+            </div>
+            <CustomButton
+            title="Ingresar"
+            btnType="button"
+            containerStyles="text-primary-blue rounded-full bg-white min-w-[130px]"
+            />
           </div>
         </div>
       </div>
