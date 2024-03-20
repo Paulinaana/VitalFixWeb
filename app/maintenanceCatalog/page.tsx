@@ -7,7 +7,7 @@ function catalog(){
     <div className='w-full h-screen flex items-start flex-1 pt-36 '>
         <div className='mt-12 padding-x padding-y max-width' id="discover">
             <div className='home__text-container'>
-                <h1 className='text-4xl font-extrabold'>Mantenimiento y reparacion</h1>
+                <h1 className='text-4xl font-extrabold'>Servicio de Mantenimiento</h1>
                 {/* <p>Detalles y revisión</p> */}
 
                 <div className='home__filters'>
@@ -17,7 +17,7 @@ function catalog(){
                     <input type='text' placeholder='Escribe ' className='w-80 border-r-2' />
                     <CustomButton
                         title='Buscar'
-                        containerStyles='w-full py-[16px] rounded-full bg-primary-blue' 
+                        containerStyles='w-full py-[16px] rounded-full bg-primary-blue text-white' 
                         />
 
                     {/* <CustomFilter title="fuel" />
@@ -66,13 +66,15 @@ function catalog(){
                                 </div>
 
                                 <div className="car-card__btn-container">
-                                <CustomButton
+                                <a className="w-full py-[16px] rounded-full bg-primary-blue text-white pl-20 mt-5" href="/productDetail">Ver mas</a>
+
+                                {/* <CustomButton
                                     title='Ver mas'
-                                    containerStyles='w-full py-[16px] rounded-full bg-primary-blue'
+                                    containerStyles='w-full py-[16px] rounded-full bg-primary-blue text-white'
                                     // textStyles='text-white text-[14px] leading-[17px] font-bold'
                                     // rightIcon='/right-arrow.svg'
                                 
-                                />
+                                /> */}
                                 </div>
                             </div>
 
@@ -114,13 +116,15 @@ function catalog(){
                                 </div>
 
                                 <div className="car-card__btn-container">
-                                <CustomButton
+                                <a className="w-full py-[16px] rounded-full bg-primary-blue text-white pl-20 mt-5" href="/productDetail">Ver mas</a>
+
+                                {/* <CustomButton
                                     title='Ver mas'
-                                    containerStyles='w-full py-[16px] rounded-full bg-primary-blue'
+                                    containerStyles='w-full py-[16px] rounded-full bg-primary-blue text-white'
                                     // textStyles='text-white text-[14px] leading-[17px] font-bold'
                                     // rightIcon='/right-arrow.svg'
                                 
-                                />
+                                /> */}
                                 </div>
                             </div>
 
@@ -162,13 +166,15 @@ function catalog(){
                                 </div>
 
                                 <div className="car-card__btn-container">
-                                <CustomButton
+                                <a className="w-full py-[16px] rounded-full bg-primary-blue text-white pl-20 mt-5" href="/productDetail">Ver mas</a>
+
+                                {/* <CustomButton
                                     title='Ver mas'
-                                    containerStyles='w-full py-[16px] rounded-full bg-primary-blue'
+                                    containerStyles='w-full py-[16px] rounded-full bg-primary-blue text-white'
                                     // textStyles='text-white text-[14px] leading-[17px] font-bold'
                                     // rightIcon='/right-arrow.svg'
                                 
-                                />
+                                /> */}
                                 </div>
                             </div>
 
@@ -210,13 +216,15 @@ function catalog(){
                                 </div>
 
                                 <div className="car-card__btn-container">
-                                <CustomButton
+                                <a className="w-full py-[16px] rounded-full bg-primary-blue text-white pl-20 mt-5" href="/productDetail">Ver mas</a>
+
+                                {/* <CustomButton
                                     title='Ver mas'
-                                    containerStyles='w-full py-[16px] rounded-full bg-primary-blue'
+                                    containerStyles='w-full py-[16px] rounded-full bg-primary-blue text-white'
                                     // textStyles='text-white text-[14px] leading-[17px] font-bold'
                                     // rightIcon='/right-arrow.svg'
                                 
-                                />
+                                /> */}
                                 </div>
                             </div>
 

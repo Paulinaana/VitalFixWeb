@@ -38,11 +38,13 @@ export default function Home() {
                 El mantenimiento de equipos garantiza el correcto funcionamiento, la seguridad y la fiabilidad de los dispositivos y maquinaria utilizados en entornos médicos.
               </p>
             </div>
-            <CustomButton
+            <a className="text-primary-blue ml-10 rounded-full bg-white min-w-[130px]" href="/maintenanceCatalog">Ingresar</a>
+
+            {/* <CustomButton
             title="Ingresar"
             btnType="button"
             containerStyles="text-primary-blue rounded-full bg-white min-w-[130px]" 
-            />
+            /> */}
           </div>
           <div className="max-w-sm rounded overflow-hidden shadow-lg">
             <Image src="/Reparacion.jpeg" alt="card" width={480} height={180} />
@@ -52,24 +54,28 @@ export default function Home() {
                 La reparación de equipos médicos permite identificar, diagnosticar y corregir los problemas o averías que puedan surgir en los dispositivos y maquinaria utilizados en entornos médicos.
               </p>
             </div>
-            <CustomButton
+            <a className="text-primary-blue ml-10 rounded-full bg-white min-w-[130px]" href="/repairCatalog">Ingresar</a>
+            {/* <CustomButton
             title="Ingresar"
             btnType="button"
+            redirectPath="/catalo"
             containerStyles="text-primary-blue rounded-full bg-white min-w-[130px]"
-            />
+            /> */}
           </div>
           <div className="max-w-sm rounded overflow-hidden shadow-lg">
             <Image src="/instalacion.jpg" alt="card" width={480} height={180} />
             <div className="px-6 py-4">
               <div className="font-bold text-xl mb-2">Instalación</div>
               <p className="text-gray-700 text-base">
-              La instalación de equipos médicos permite poner en funcionamiento los equipos especializados utilizados en entornos médicos. Esta instalación se realiza siguiendo protocolos específicos y normas de seguridad para garantizar que los equipos operen de manera eficiente y segura.</p>
+              La instalación de equipos médicos permite poner en funcionamiento los equipos utilizados en entornos médicos. Se realiza siguiendo protocolos específicos y normas de seguridad garantizando que los equipos operen de manera eficiente y segura.</p>
             </div>
-            <CustomButton
+            <a className="text-primary-blue ml-10 rounded-full bg-white min-w-[130px]" href="/installationCatalog">Ingresar</a>
+
+            {/* <CustomButton
             title="Ingresar"
             btnType="button"
             containerStyles="text-primary-blue rounded-full bg-white min-w-[130px]"
-            />
+            /> */}
           </div>
         </div>
       </div>
