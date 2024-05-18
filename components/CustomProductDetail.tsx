@@ -4,18 +4,7 @@ import React from "react";
 import { ProductDetailProps } from "@/types";
 
 
-function CustomProductDetail({
-    searchParams,
-}: {
-        searchParams: { 
-        title: string;
-        category: string; 
-        image: string;
-        alt: string;
-        description: string; 
-        price: string;
-     };
-}) {
+function CustomProductDetail({title, category, image, alt, description, price}: ProductDetailProps) {
     return (
         <div>
             <section className="text-gray-600 body-font overflow-hidden">
@@ -142,7 +131,7 @@ function CustomProductDetail({
                             <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5"></div>
                             <div className="flex">
                                 <span className="title-font font-medium text-2xl text-gray-900">
-                                    ${price}
+                                    {price}
                                 </span>
                                 <a
                                     className="flex ml-auto text-white bg-primary-blue border-0 py-2 px-6 focus:outline-none hover:text-white rounded"
