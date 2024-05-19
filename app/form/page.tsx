@@ -10,13 +10,13 @@ function form(){
                     <h1 className='about__title'>
                         Solicitud de Servicio
                     </h1>
-                    <p className='about__subtitle text-[20px]'>
+                    <p className='about__subtitle text-[18px]'>
                     Entendemos que su tiempo es valioso. Este sistema ha sido creado para hacer la experiencia lo más fácil posible, así como para ahorrarle tiempo y dinero. 
                     Si tiene un equipo que necesita reparación, instalacion o mantenimiento, rellene el siguiente formulario. Evaluaremos su solicitud y determinaremos la opción más rápida y económica para su equipo.
                     </p>
                 </div>
-            <form className='mt-2 padding-x padding-y w-auto'>
-                <div className="shadow-lg rounded p-10 flex w-auto h-full flex-row">
+            <form className='mt-2 padding-x padding-y w-auto flex justify-center'>
+                <div className="shadow-lg rounded p-10 flex w-full max-w-md">
                     <div className="border-b border-gray-900/10 pb-12 w-auto">
                     <h2 className="text-base font-semibold leading-7 text-gray-900">Información del Producto</h2>
                     <p className="mt-1 text-sm leading-6 text-gray-600">Esta información es útil para la estimación.</p>
@@ -80,9 +80,14 @@ function form(){
                         </div>
                         </div>
                     </div>
+
+                        <div className="flex items-center justify-end gap-x-6 mt-6">
+                            <button type="button" className="text-sm font-semibold leading-6 text-gray-900">Cancelar</button>
+                            <a href='/payment' className="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">Enviar</a>
+                        </div>
                     </div>
                     
-                    <div className="border-b border-gray-900/10 pb-12 ml-72">
+                    {/* <div className="border-b border-gray-900/10 pb-12 ml-72">
                     <h2 className="text-base font-semibold leading-7 text-gray-900">Información Personal</h2>
                     <p className="mt-1 text-sm leading-6 text-gray-600">Utilice una dirección permanente en la que pueda recibir el servicio.</p>
 
@@ -161,13 +166,10 @@ function form(){
                         </div>
                         </div>
                     </div>
-                    </div>
+                    </div> */}
                 </div>
 
-                <div className=" flex items-center justify-end gap-x-6">
-                    <button type="button" className="text-sm font-semibold leading-6 text-gray-900">Cancelar</button>
-                    <a href='/payment' className="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">Enviar</a>
-                </div>
+                
             </form>
             </div>
         </div>
