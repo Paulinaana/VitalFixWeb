@@ -26,7 +26,7 @@
 // layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
-import { Footer, Navbar, LoggedInNavbar } from "@/components";
+import { Footer, Navbar, NavbarUser } from "@/components";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
 
 export const metadata: Metadata = {
@@ -40,7 +40,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <body className="relative">
-        {isAuthenticated ? <LoggedInNavbar /> : <Navbar />}
+        {isAuthenticated ? <NavbarUser /> : <Navbar />}
         {children}
         <Footer />
       </body>
