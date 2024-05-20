@@ -1,5 +1,6 @@
-"use client"
+"use client"; // Esto asegura que este archivo se trate como un componente del cliente
 
+// context/AuthContext.tsx
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -16,8 +17,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
 
   useEffect(() => {
-    // Aquí podrías verificar si el usuario está autenticado usando cookies, localStorage, etc.
-    const token = localStorage.getItem('token'); // Suponiendo que guardas el token en localStorage
+    // Verificar si hay un token en localStorage
+    const token = localStorage.getItem('token');
     if (token) {
       setIsAuthenticated(true);
     }
