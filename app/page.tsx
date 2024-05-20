@@ -1,5 +1,6 @@
 import { CustomButton, Hero } from "@/components";
 import Testimonials from "@/components/Testimonials";
+import Promotion from "@/components/Promotion";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -133,7 +134,7 @@ export default function Home() {
                   </div>
               </div>
           </div>
-
+          <Promotion />
           <Testimonials />
       </main>
   );

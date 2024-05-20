@@ -22,6 +22,17 @@ function form(){
                     <p className="mt-1 text-sm leading-6 text-gray-600">Esta información es útil para la estimación.</p>
 
                         <div className="sm:col-span-3 mt-8">
+                            <label htmlFor="typeservice" className="block text-sm font-medium leading-6 text-gray-900">Tipo de Servicio</label>
+                            <div className="mt-2">
+                                <select id="service" name="service" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                <option>Instalacion</option>
+                                <option>Mantenimiento</option>
+                                <option>Reparacion</option>
+                                </select>
+                        </div>
+                        </div>
+                       
+                        <div className="sm:col-span-3 mt-8">
                         <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">Detalles del Equipo</label>
                         <div className="mt-2">
                             <input type="text" name="first-name" id="first-name" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
