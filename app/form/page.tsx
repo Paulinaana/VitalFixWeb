@@ -49,10 +49,12 @@ function Form() {
       }
 
       try {
-        const response = await axios.get('https://back-vitalfix.onrender.com/api/v1/users/me', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+          const response = await axios.get(`https://back-vitalfix.onrender.com/api/v1/users/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
         });
 
         const userData = response.data;
@@ -65,9 +67,11 @@ function Form() {
           lastname: userData.lastname,
           email: userData.email,
         }));
+      }
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
+
     };
 
     if (isAuthenticated) {
