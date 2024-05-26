@@ -23,6 +23,10 @@ function Service() {
         router.push('/service');
     }
 
+    const handleReclaim = () => {
+        router.push('/reclaim');
+    }
+
     useEffect(() => {
         const fetchUserData = async () => {
             const userId = localStorage.getItem('userId');
@@ -106,7 +110,7 @@ function Service() {
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 5v14m-6-6h12" />
                             </svg>
-                            <span className="mx-4 font-medium">Reclamos</span>
+                            <span className="mx-4 font-medium" onClick={handleReclaim}>Reclamos</span>
                         </a>
                     </nav>
                 </div>
