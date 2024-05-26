@@ -5,9 +5,9 @@ import React from 'react'
 function service(){
   return (
 
-<div className="bg-white w-full flex flex-col gap-5 px-3 md:px-16 lg:px-28 md:flex-row text-[#161931]">
-    <aside className="hidden py-6 md:w-1/3 lg:w-1/4 md:block">
-        <div className="sticky flex flex-col gap-2 p-20 text-sm border-r border-indigo-100 top-12">
+<div className="w-full h-screen flex items-start flex-1 pt-36 padding-x">
+    <aside className="hidden py-6 md:w-1/3 lg:w-1/4 md:block ">
+        <div className="w-full h-screen pt-26 padding-x text-sm border-r border-indigo-100 top-12">
 
             <h2 className="pl-3 mb-4 text-2xl font-semibold">Configuraciones</h2>
 
@@ -30,8 +30,11 @@ function service(){
     </aside>
 
     
-            <section className="container px-4 mx-auto mt-14 md:mt-20">
-                <div className="flex flex-col p-2 md:p-4">
+            <section className="container px-8 mx-auto mt-24 md:mt-5">
+                <h2 className="text-lg font-medium text-gray-800 dark:text-black">Customers</h2>
+                    <p className="mt-1 text-sm text-gray-500 dark:text-black-300">These companies have purchased in the last 12 months.</p>
+                    <div className="flex flex-col p-2 md:p-4">
+
                     <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                             <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
