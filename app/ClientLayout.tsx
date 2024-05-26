@@ -1,15 +1,20 @@
-"use client"; // Esto asegura que este archivo se trate como un componente del cliente
+"use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Footer, Navbar, NavbarUser } from "@/components";
 import { useAuth } from "@/context/AuthContext";
 
 const ClientLayout = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuth();
+  const [authStatus, setAuthStatus] = useState(isAuthenticated);
+
+  useEffect(() => {
+    setAuthStatus(isAuthenticated);
+  }, [isAuthenticated]);
 
   return (
     <div className="relative">
-      {isAuthenticated ? <NavbarUser /> : <Navbar />}
+      {authStatus ? <NavbarUser /> : <Navbar />}
       {children}
       <Footer />
     </div>

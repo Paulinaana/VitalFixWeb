@@ -1,12 +1,11 @@
-"use client"; // Esto asegura que este archivo se trate como un componente del cliente
+"use client";
 
-// context/AuthContext.tsx
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface AuthContextProps {
   isAuthenticated: boolean;
-  login: () => void;
+  login: (userId: string) => void;
   logout: () => void;
 }
 
@@ -24,14 +23,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  const login = () => {
+  const login = (userId: string) => {
     setIsAuthenticated(true);
+    localStorage.setItem('userId', userId);
     router.push('/');
   };
 
   const logout = () => {
     setIsAuthenticated(false);
-    localStorage.removeItem('token'); // Eliminar el token de localStorage
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
     router.push('/login');
   };
 
