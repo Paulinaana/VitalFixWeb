@@ -113,7 +113,7 @@ function NavbarUser() {
             </div>
             <div className={`absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${isMenuOpen ? 'block' : 'hidden'}`} role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button">
               <a href="#" onClick={handleProfileClick} className="block px-4 py-2 text-sm text-gray-700" role="menuitem">Tu perfil</a>
-              <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem">Settings</a>
+              {/* <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem">Settings</a> */}
               <button onClick={handleLogout} className="block px-4 py-2 text-sm text-gray-700" role="menuitem">Cerrar sesión</button>
             </div>
           </div>
