@@ -131,27 +131,27 @@ function Reclaim() {
                     <p className="mx-2 mt-1 text-sm font-medium text-gray-800">{user.email}</p>
                 </div>
                 <div className="flex flex-col justify-between flex-1 mt-6">
-                    <nav>
-                        <a className="flex items-center px-4 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg hover:bg-blue-700 hover:text-gray-100" href="#">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 00-8 0 4 4 0 008 0z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 14l7 7m-7-7l-7 7" />
+                <nav>
+                    <a className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg hover:bg-blue-700 hover:text-gray-100" href="#">
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <span className="mx-4 font-medium" onClick={handleProfile}>Perfil</span>
+                    </a>
+                    <a className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg hover:bg-blue-700 hover:text-gray-100" href="#">
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 11H5M19 11C20.1046 11 21 11.8954 21 13V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V13C3 11.8954 3.89543 11 5 11M19 11V9C19 7.89543 18.1046 7 17 7M5 11V9C5 7.89543 5.89543 7 7 7M7 7V5C7 3.89543 7.89543 3 9 3H15C16.1046 3 17 3.89543 17 5V7M7 7H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <span className="mx-4 font-medium" onClick={handleService}>Servicios</span>
+                    </a>
+                    <a className="flex items-center px-4 py-2 mt-5 text-gray-100 bg-blue-700 rounded-lg" href="#">
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15 5V7M15 11V13M15 17V19M5 5C3.89543 5 3 5.89543 3 7V10C4.10457 10 5 10.8954 5 12C5 13.1046 4.10457 14 3 14V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V14C19.8954 14 19 13.1046 19 12C19 10.8954 19.8954 10 21 10V7C21 5.89543 20.1046 5 19 5H5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
-                            <span className="mx-4 font-medium" onClick={handleProfile}>Perfil</span>
-                        </a>
-                        <a className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg hover:bg-blue-700 hover:text-gray-100" href="#">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M12 3.54l.01-.01" />
-                            </svg>
-                            <span className="mx-4 font-medium" onClick={handleService}>Servicios</span>
-                        </a>
-                        <a className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg hover:bg-blue-700 hover:text-gray-100" href="#">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 5v14m-6-6h12" />
-                            </svg>
-                            <span className="mx-4 font-medium" onClick={handleReclaim}>Reclamos</span>
-                        </a>
-                    </nav>
+                    <span className="mx-4 font-medium" onClick={handleReclaim}>Reclamos</span>
+                    </a>
+                </nav>
                 </div>
             </aside>
             <main className='w-full min-h-screen py-5 bg-gray-50 overflow-auto'>
@@ -174,8 +174,7 @@ function Reclaim() {
                                             id="request_id"
                                             value={formData.request_id}
                                             onChange={handleInputChange}
-                                            className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        >
+                                            className='w-full text-black py-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500'                                           >
                                             <option value="">Seleccionar solicitud</option>
                                             {requests.map(request => (
                                                 <option key={request.id} value={request.id}>{request.description}</option>
@@ -192,8 +191,7 @@ function Reclaim() {
                                             id="title"
                                             value={formData.title}
                                             onChange={handleInputChange}
-                                            className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        />
+                                            className='w-full text-black py-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500'                                        />
                                     </div>
                                 </div>
                                 <div className="sm:col-span-2">
@@ -205,8 +203,7 @@ function Reclaim() {
                                             id="fecha"
                                             value={formData.fecha}
                                             onChange={handleInputChange}
-                                            className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        />
+                                            className='w-full text-black py-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500'                                        />
                                     </div>
                                 </div>
                                 <div className="sm:col-span-2">
@@ -217,8 +214,7 @@ function Reclaim() {
                                             id="description"
                                             value={formData.description}
                                             onChange={handleInputChange}
-                                            className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        ></textarea>
+                                            className='w-full text-black py-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500'                                        ></textarea>
                                     </div>
                                 </div>
                                 
@@ -231,8 +227,7 @@ function Reclaim() {
                                             id="status"
                                             value={formData.status}
                                             onChange={handleInputChange}
-                                            className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        />
+                                            className='w-full text-black py-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500'                                        />
                                     </div>
                                 </div>
                             </div>

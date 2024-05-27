@@ -78,15 +78,15 @@ const Login: React.FC = () => {
               placeholder='Correo electrónico'
               value={email}
               onChange={handleChangeEmail}
-              className='w-full text-black py-2 my-2 bg-transparent border-b border-black outline-none focus:outline-none'
-            />
+              className='w-full text-black py-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500'
+              />
             <input
               type={showPassword ? 'text' : 'password'}
               name="password"
               placeholder='Contraseña'
               value={password}
               onChange={handleChangePassword}
-              className='w-full text-black py-2 my-2 bg-transparent border-b border-black outline-none focus:outline-none'
+              className='w-full text-black py-2 my-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500'
             />
           </div>
 
