@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-
 function User() {
   const router = useRouter();
   const [user, setUser] = useState({
@@ -22,18 +21,22 @@ function User() {
     urlAvatar: "/mujer-sonriente.jpg"
   });
 
+  const [passwordData, setPasswordData] = useState({
+    password: "",
+    newPassword: ""
+  });
+
   const handleProfile = () => {
     router.push('/user');
-  }
+  };
 
   const handleService = () => {
     router.push('/service');
-  }
+  };
 
   const handleReclaim = () => {
     router.push('/reclaim');
-}
-
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -74,13 +77,69 @@ function User() {
     fetchUserData();
   }, []);
 
+  const handlePasswordChange = (e) => {
+    setPasswordData({ ...passwordData, [e.target.id]: e.target.value });
+  };
+
+  const handleUpdatePassword = async (e) => {
+    e.preventDefault();
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      try {
+        const response = await fetch(`https://back-vitalfix.onrender.com/api/v1/users/updatePassword/${userId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          },
+          body: JSON.stringify(passwordData)
+        });
+        if (response.ok) {
+          alert('Password updated successfully');
+        } else {
+          console.error('Failed to update password');
+          alert('Failed to update password');
+        }
+      } catch (error) {
+        console.error('Error updating password:', error);
+        alert('Error updating password');
+      }
+    }
+  };
+
+  const handleSaveProfile = async (e) => {
+    e.preventDefault();
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      try {
+        const response = await fetch(`https://back-vitalfix.onrender.com/api/v1/users/${userId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          },
+          body: JSON.stringify(user)
+        });
+        if (response.ok) {
+          alert('Profile updated successfully');
+        } else {
+          console.error('Failed to update profile');
+          alert('Failed to update profile');
+        }
+      } catch (error) {
+        console.error('Error updating profile:', error);
+        alert('Error updating profile');
+      }
+    }
+  };
+
   return (
     <div className="flex h-screen">
       <aside className="flex flex-col w-64 px-5 py-20 bg-gray-100 border-r h-screen">
         <div className="flex flex-col items-center mt-16 -mx-2">
           <Image
             className="object-cover w-24 h-24 mx-2 rounded-full"
-            src={user.urlAvatar}
+            src={user.urlAvatar || '/mujer-sonriente.jpg'}
             alt="User Avatar"
             width={96}
             height={96}
@@ -136,7 +195,7 @@ function User() {
                 </button>
               </div>
             </div>
-            <form className="mt-8">
+            <form className="mt-8" onSubmit={handleSaveProfile}>
               <h3 className="text-lg font-semibold text-indigo-900">Información Personal</h3>
               <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                 <div>
@@ -153,7 +212,7 @@ function User() {
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700">Correo</label>
-                  <input type="email" id="email" value={user.email} className="block w-full px-4 py-2 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                  <input readonly type="email" id="email" value={user.email} className="block w-full px-4 py-2 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
               </div>
               <div className="mt-8">
@@ -187,14 +246,30 @@ function User() {
                     <label htmlFor="state" className="block text-sm font-medium text-gray-700">Estado</label>
                     <input type="text" id="state" value={user.state} className="block w-full px-4 py-2 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
                   </div>
-                  <div>
-                    <label htmlFor="zipCode" className="block text-sm font-medium text-gray-700">Código Postal</label>
-                    <input type="text" id="zipCode" value={user.zipCode} className="block w-full px-4 py-2 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
-                  </div>
                 </div>
               </div>
-              <div className="flex justify-end mt-8">
-                <button type="submit" className="px-6 py-2 text-base font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700">Guardar</button>
+              <div className="mt-8">
+                <button type="submit" className="px-4 py-2 text-base font-medium text-indigo-100 bg-indigo-600 rounded-lg hover:bg-indigo-700">
+                  Guardar
+                </button>
+              </div>
+            </form>
+            <form className="mt-12" onSubmit={handleUpdatePassword}>
+              <h3 className="text-lg font-semibold text-indigo-900">Cambiar Contraseña</h3>
+              <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="password" className="block text-sm font-medium text-gray-700">Contraseña Actual</label>
+                  <input type="password" id="password" value={passwordData.password} onChange={handlePasswordChange} className="block w-full px-4 py-2 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                </div>
+                <div>
+                  <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700">Nueva Contraseña</label>
+                  <input type="password" id="newPassword" value={passwordData.newPassword} onChange={handlePasswordChange} className="block w-full px-4 py-2 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                </div>
+              </div>
+              <div className="mt-8">
+                <button type="submit" className="px-4 py-2 text-base font-medium text-indigo-100 bg-indigo-600 rounded-lg hover:bg-indigo-700">
+                  Actualizar Contraseña
+                </button>
               </div>
             </form>
           </div>

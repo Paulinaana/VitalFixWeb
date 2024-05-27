@@ -23,6 +23,23 @@ function NavbarUser() {
     router.push('/form');
   }
 
+  const handleInstallCatalog = () => {
+    router.push('/installationCatalog');
+
+  }  
+
+  const handleMaintanceCatalog = () => {
+    router.push('/maintenanceCatalog');
+
+  }  
+
+  const handleRepairCatalog = () => {
+    router.push('/repairCatalog');
+
+  }  
+
+
+
   const handleLogout = () => {
     logout(); 
   };
@@ -82,8 +99,10 @@ function NavbarUser() {
         </div>
         <div className={`hidden lg:flex lg:gap-x-12 ${isMenuOpen ? 'block' : 'hidden'}`}>
           {/* Agrega aquí el contenido del menú */}
-          <a href="#" onClick={handleHome}><span className="text-white">Inicio</span></a>
-          <a href="#" onClick={handleRequest}><span className="text-white">Solicitud de Servicios</span></a>
+          <a href="#" onClick={handleRepairCatalog}><span className="text-white text-lg">Reparación</span></a>
+          <a href="#" onClick={handleMaintanceCatalog}><span className="text-white text-lg">Mantenimiento</span></a>
+          <a href="#" onClick={handleInstallCatalog }><span className="text-white text-lg">Instalación</span></a>
+          <a href="#" onClick={handleRequest}><span className="text-white text-lg">Solicitud de Servicios</span></a>
 
         </div>
         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -123,7 +142,7 @@ function NavbarUser() {
         <div className="fixed inset-0 z-10"></div>
         <div className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <span>Solicitud de Servicios</span>
-          <a href="#" onClick={handleHome}><span className="text-white">Inicio</span></a>
+          <a href="#" onClick={handleHome}><span className="text-white text-lg">Inicio</span></a>
           <a href="#" onClick={handleRequest}><span className="text-white">Solicitud de Servicios</span></a>
 
         </div>

@@ -83,7 +83,7 @@ function Service() {
                 <div className="flex flex-col items-center mt-16 -mx-2">
                     <Image
                         className="object-cover w-24 h-24 mx-2 rounded-full"
-                        src={user.urlAvatar}
+                        src={user.urlAvatar || '/mujer-sonriente.jpg'}
                         alt="User Avatar"
                         width={96}
                         height={96}
@@ -166,7 +166,10 @@ function Service() {
                                                 <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">{new Date(request.createdAt).toLocaleDateString()}</td>
                                                 <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">{request.status}</td>
                                                 <td className="px-4 py-4 text-sm font-medium text-right whitespace-nowrap">
-                                                    <a href="#" className="text-blue-500 hover:text-blue-700">Ver</a>
+                                                    <button type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-blue-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
+                                                        Visualizar Servicio
+                                                    </button>
+                                                    {/* <a href="#" className="text-blue-500 hover:text-blue-700">Ver</a> */}
                                                 </td>
                                             </tr>
                                         ))}
