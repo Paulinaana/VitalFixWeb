@@ -1,7 +1,8 @@
-'use client';
+"use client";
 
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 import Image from 'next/image';
 
 const Login: React.FC = () => {
@@ -10,6 +11,7 @@ const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
+  const { login } = useAuth();
 
   const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -21,7 +23,7 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    console.log("entro")
     const requestBody = {
       email,
       password
@@ -35,10 +37,11 @@ const Login: React.FC = () => {
         },
         body: JSON.stringify(requestBody)
       });
-
+      console.log(response)
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('token', data.token); // Guarda el token en localStorage
+        login(data.id); // Usa el método login del contexto para establecer la autenticación
         setErrorMessage('');
         router.push('/'); // Redirige a la página principal
       } else {

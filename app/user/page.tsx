@@ -1,205 +1,282 @@
-import { CustomButton, CustomFilter, SearchBar } from '@/components'
-import Image from 'next/image'
-import React from 'react'
+"use client";
 
-function user(){
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+
+function User() {
+  const router = useRouter();
+  const [user, setUser] = useState({
+    name: "",
+    lastname: "",
+    username: "",
+    email: "",
+    phone: "",
+    country: "Venezuela",
+    address: "",
+    references: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    urlAvatar: "/mujer-sonriente.jpg"
+  });
+
+  const [passwordData, setPasswordData] = useState({
+    password: "",
+    newPassword: ""
+  });
+
+  const handleProfile = () => {
+    router.push('/user');
+  };
+
+  const handleService = () => {
+    router.push('/service');
+  };
+
+  const handleReclaim = () => {
+    router.push('/reclaim');
+  };
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const userId = localStorage.getItem('userId');
+      if (userId) {
+        try {
+          const response = await fetch(`https://back-vitalfix.onrender.com/api/v1/users/${userId}`, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+          });
+          if (response.ok) {
+            const data = await response.json();
+            setUser({
+              name: data.name,
+              lastname: data.lastname,
+              username: data.username,
+              email: data.email,
+              phone: data.phone,
+              country: data.country,
+              address: data.address,
+              references: data.references,
+              city: data.city,
+              state: data.state,
+              zipCode: data.zipCode,
+              urlAvatar: data.urlAvatar || "/mujer-sonriente.jpg"
+            });
+          } else {
+            console.error('Failed to fetch user data');
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const handlePasswordChange = (e) => {
+    setPasswordData({ ...passwordData, [e.target.id]: e.target.value });
+  };
+
+  const handleUpdatePassword = async (e) => {
+    e.preventDefault();
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      try {
+        const response = await fetch(`https://back-vitalfix.onrender.com/api/v1/users/updatePassword/${userId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          },
+          body: JSON.stringify(passwordData)
+        });
+        if (response.ok) {
+          alert('Password updated successfully');
+        } else {
+          console.error('Failed to update password');
+          alert('Failed to update password');
+        }
+      } catch (error) {
+        console.error('Error updating password:', error);
+        alert('Error updating password');
+      }
+    }
+  };
+
+  const handleSaveProfile = async (e) => {
+    e.preventDefault();
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      try {
+        const response = await fetch(`https://back-vitalfix.onrender.com/api/v1/users/${userId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          },
+          body: JSON.stringify(user)
+        });
+        if (response.ok) {
+          alert('Profile updated successfully');
+        } else {
+          console.error('Failed to update profile');
+          alert('Failed to update profile');
+        }
+      } catch (error) {
+        console.error('Error updating profile:', error);
+        alert('Error updating profile');
+      }
+    }
+  };
+
   return (
-
-<div className="bg-white w-full flex flex-col gap-5 px-3 md:px-16 lg:px-28 md:flex-row text-[#161931]">
-    <aside className="hidden py-4 md:w-1/3 lg:w-1/4 md:block">
-        <div className="mt-10 flex flex-col gap-2 p-20 text-sm border-r border-indigo-100 top-12">
-
-            <h2 className="pl-3 mb-4 text-2xl font-semibold">Configuraciones</h2>
-
-            <a href="#" className="flex items-center px-3 py-2.5 font-bold bg-white  text-indigo-900 border rounded-full">
-                Perfil
-            </a>
-            <a href="#"
-                className="flex items-center px-3 py-2.5 font-semibold  hover:text-indigo-900 hover:border hover:rounded-full">
-                Servicios
-            </a>
-            <a href="#"
-                className="flex items-center px-3 py-2.5 font-semibold hover:text-indigo-900 hover:border hover:rounded-full  ">
-                Reclamos
-            </a>
-            {/* <a href="#"
-                className="flex items-center px-3 py-2.5 font-semibold hover:text-indigo-900 hover:border hover:rounded-full  ">
-                PRO Account
-            </a> */}
+    <div className="flex h-screen">
+      <aside className="flex flex-col w-64 px-5 py-20 bg-gray-100 border-r h-screen">
+        <div className="flex flex-col items-center mt-16 -mx-2">
+          <Image
+            className="object-cover w-24 h-24 mx-2 rounded-full"
+            src={user.urlAvatar || '/mujer-sonriente.jpg'}
+            alt="User Avatar"
+            width={96}
+            height={96}
+          />
+          <h4 className="mx-2 mt-2 font-medium text-gray-800">{user.name}</h4>
+          <p className="mx-2 mt-1 text-sm font-medium text-gray-800">{user.email}</p>
         </div>
-    </aside>
-    <main className="w-full min-h-screen py-5 md:w-2/3 lg:w-3/4">
-        <div className="p-4 md:p-4">
-            <div className="w-full px-6 pb-8 mt-8 sm:max-w-xl sm:rounded-lg">
-                <h2 className="pl-6 text-2xl font-bold sm:text-xl">Perfil</h2>
-
-                <div className="grid max-w-2xl mx-auto mt-8">
-                    <div className="flex flex-col items-center space-y-5 sm:flex-row sm:space-y-0">
-
-                        {/* <img className="object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500"
-                            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZhY2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
-                            alt="Bordered avatar"> */}
-
-                        <div className="object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500">
-                            <Image
-                                src="/mujer-sonriente.jpg"
-                                alt="Bordered avatar"
-                                width={335}
-                                height={93}
-                                priority
-                                className="rounded-full"
-                                />
-                        </div>       
-
-                        <div className="flex flex-col space-y-5 sm:ml-8">
-                            <button type="button"
-                                className="py-3.5 px-7 text-base font-medium text-indigo-100 focus:outline-none bg-[#202142] rounded-lg border border-indigo-200 hover:bg-indigo-900 focus:z-10 focus:ring-4 focus:ring-indigo-200 ">
-                                Cambiar foto
-                            </button>
-                            <button type="button"
-                                className="py-3.5 px-7 text-base font-medium text-indigo-900 focus:outline-none bg-white rounded-lg border border-indigo-200 hover:bg-indigo-100 hover:text-[#202142] focus:z-10 focus:ring-4 focus:ring-indigo-200 ">
-                                Eliminar foto
-                            </button>
-                        </div>
-                    </div>
-
-
-                    <div className="flex flex-wrap"> 
-                    <div className="w-full sm:w-1/2 pr-4"> 
-
-                        <div className="items-center mt-8 sm:mt-14 text-[#202142]">
-                        <h2 className="text-base font-semibold leading-7 text-gray-900">Información Personal</h2>
-
-                            <div
-                                className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
-                                <div className="w-full">
-                                    <label htmlFor="names"
-                                        className="block mb-2 text-sm font-medium text-indigo-900 dark:text-white">
-                                        Nombres</label>
-                                    <input type="text" id="names"
-                                        className="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 "
-                                        placeholder="Nombres" required/>
-                                </div>
-
-                                <div className="w-full">
-                                    <label htmlFor="last_name"
-                                        className="block mb-2 text-sm font-medium text-indigo-900 dark:text-white">
-                                        Apellidos</label>
-                                    <input type="text" id="last_name"
-                                        className="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 "
-                                        placeholder="Apellidos" required/>
-                                </div>
-
-                            </div>
-
-                            <div className="mb-2 sm:mb-6">
-                                <label htmlFor="user"
-                                    className="block mb-2 text-sm font-medium text-indigo-900 dark:text-white">Usuario</label>
-                                <input type="text" id="user"
-                                    className="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 "
-                                    placeholder="Nombre de usuario" required/>
-                            </div>
-
-                            <div className="mb-2 sm:mb-6">
-                                <label htmlFor="email"
-                                    className="block mb-2 text-sm font-medium text-indigo-900 dark:text-white">Tu
-                                    correo</label>
-                                <input type="email" id="email"
-                                    className="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 "
-                                    placeholder="tu.correo@mail.com" required />
-                            </div>
-
-
-                            {/* <div className="mb-6">
-                                <label htmlFor="message"
-                                    className="block mb-2 text-sm font-medium text-indigo-900 dark:text-white">Bio</label>
-                                <textarea id="message"
-                                    className="block p-2.5 w-full text-sm text-indigo-900 bg-indigo-50 rounded-lg border border-indigo-300 focus:ring-indigo-500 focus:border-indigo-500 "
-                                    placeholder="Write your bio here..."></textarea>
-                            </div> */}
-
-                            <div className="flex justify-end">
-                                <button type="submit"
-                                    className="text-white bg-indigo-700  hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Guardar</button>
-                            </div>
-
-                        </div>
-                        </div> 
-
-                        <div className="w-full sm:w-1/2 pl-20 mt-8 sm:mt-19"> 
-
-                        <div className="border-b border-gray-900/10 pb-12 w-auto">
-                        <h2 className="text-base font-semibold leading-7 text-gray-900">Información Adicional</h2>
-                        <p className="mt-1 text-sm leading-6 text-gray-600">Utilice una dirección permanente en la que pueda recibir el servicio.</p>
-
-                        <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-
-                            <div className="sm:col-span-3">
-                            <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">Teléfono</label>
-                            <div className="mt-2">
-                                <input type="text" name="last-name" id="last-name" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                            </div>
-                            </div>
-
-                            <div className="sm:col-span-3">
-                            <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">País</label>
-                            <div className="mt-2">
-                                <select id="country" name="country" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                                <option>Venezuela</option>
-                                <option>Canada</option>
-                                <option>Mexico</option>
-                                </select>
-                            </div>
-                            </div>
-
-                            <div className="col-span-full">
-                            <label htmlFor="street-address" className="block text-sm font-medium leading-6 text-gray-900">Dirección</label>
-                            <div className="mt-2">
-                                <input type="text" name="street-address" id="street-address" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                            </div>
-                            </div>
-
-                            <div className="col-span-full">
-                            <label htmlFor="street-address" className="block text-sm font-medium leading-6 text-gray-900">Referencias</label>
-                            <div className="mt-2">
-                                <input type="text" name="street-address" id="street-address" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                            </div>
-                            </div>
-
-                            <div className="sm:col-span-2 sm:col-start-1">
-                            <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">Ciudad</label>
-                            <div className="mt-2">
-                                <input type="text" name="city" id="city"  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                            </div>
-                            </div>
-
-                            <div className="sm:col-span-2">
-                            <label htmlFor="region" className="block text-sm font-medium leading-6 text-gray-900">Estado</label>
-                            <div className="mt-2">
-                                <input type="text" name="region" id="region" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                            </div>
-                            </div>
-
-                            <div className="sm:col-span-2">
-                            <label htmlFor="postal-code" className="block text-sm font-medium leading-6 text-gray-900">ZIP / Codigo Postal</label>
-                            <div className="mt-2">
-                                <input type="text" name="postal-code" id="postal-code"  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" />
-                            </div>
-                            </div>
-                        </div>
-                        </div>
-                        </div> 
-                        </div> 
-
-
-                    </div>
+        <div className="flex flex-col justify-between flex-1 mt-6">
+          <nav>
+            <a className="flex items-center px-4 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg hover:bg-blue-700 hover:text-gray-100" href="#">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 00-8 0 4 4 0 008 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 14l7 7m-7-7l-7 7" />
+              </svg>
+              <span className="mx-4 font-medium" onClick={handleProfile}>Perfil</span>
+            </a>
+            <a className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg hover:bg-blue-700 hover:text-gray-100" href="#">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M12 3.54l.01-.01" />
+              </svg>
+              <span className="mx-4 font-medium" onClick={handleService}>Servicios</span>
+            </a>
+            <a className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg hover:bg-blue-700 hover:text-gray-100" href="#">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 5v14m-6-6h12" />
+              </svg>
+              <span className="mx-4 font-medium" onClick={handleReclaim}>Reclamos</span>
+            </a>
+          </nav>
+        </div>
+      </aside>
+      <main className="w-full min-h-screen py-5 bg-gray-50 overflow-auto">
+        <div className="p-4 md:p-8">
+          <div className="w-full px-6 pb-8 bg-white rounded-lg shadow sm:max-w-2xl sm:mx-auto">
+            <h2 className="text-2xl font-bold sm:text-3xl text-indigo-900">Perfil</h2>
+            <div className="flex flex-col items-center mt-8 space-y-5 sm:flex-row sm:space-y-0 sm:space-x-8">
+              <div className="object-cover w-40 h-40 rounded-full ring-2 ring-indigo-300">
+                <Image
+                  src={user.urlAvatar}
+                  alt="Bordered avatar"
+                  width={160}
+                  height={160}
+                  priority
+                  className="rounded-full"
+                />
+              </div>
+              <div className="flex flex-col space-y-3">
+                <button type="button" className="px-4 py-2 text-base font-medium text-indigo-100 bg-indigo-600 rounded-lg hover:bg-indigo-700">
+                  Cambiar foto
+                </button>
+                <button type="button" className="px-4 py-2 text-base font-medium text-indigo-900 bg-white border border-indigo-200 rounded-lg hover:bg-indigo-100">
+                  Eliminar foto
+                </button>
+              </div>
             </div>
+            <form className="mt-8" onSubmit={handleSaveProfile}>
+              <h3 className="text-lg font-semibold text-indigo-900">Información Personal</h3>
+              <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="names" className="block text-sm font-medium text-gray-700">Nombres</label>
+                  <input type="text" id="names" value={user.name} className="block w-full px-4 py-2 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                </div>
+                <div>
+                  <label htmlFor="lastname" className="block text-sm font-medium text-gray-700">Apellidos</label>
+                  <input type="text" id="lastname" value={user.lastname} className="block w-full px-4 py-2 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                </div>
+                <div>
+                  <label htmlFor="user" className="block text-sm font-medium text-gray-700">Usuario</label>
+                  <input type="text" id="user" value={user.username} className="block w-full px-4 py-2 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">Correo</label>
+                  <input readonly type="email" id="email" value={user.email} className="block w-full px-4 py-2 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                </div>
+              </div>
+              <div className="mt-8">
+                <h3 className="text-lg font-semibold text-indigo-900">Información Adicional</h3>
+                <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Teléfono</label>
+                    <input type="text" id="phone" value={user.phone} className="block w-full px-4 py-2 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                  </div>
+                  <div>
+                    <label htmlFor="country" className="block text-sm font-medium text-gray-700">País</label>
+                    <select id="country" value={user.country} className="block w-full px-4 py-2 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                      <option>Venezuela</option>
+                      <option>Canada</option>
+                      <option>Mexico</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label htmlFor="address" className="block text-sm font-medium text-gray-700">Dirección</label>
+                    <input type="text" id="address" value={user.address} className="block w-full px-4 py-2 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                  </div>
+                  <div>
+                    <label htmlFor="references" className="block text-sm font-medium text-gray-700">Referencias</label>
+                    <input type="text" id="references" value={user.references} className="block w-full px-4 py-2 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                  </div>
+                  <div>
+                    <label htmlFor="city" className="block text-sm font-medium text-gray-700">Ciudad</label>
+                    <input type="text" id="city" value={user.city} className="block w-full px-4 py-2 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                  </div>
+                  <div>
+                    <label htmlFor="state" className="block text-sm font-medium text-gray-700">Estado</label>
+                    <input type="text" id="state" value={user.state} className="block w-full px-4 py-2 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                  </div>
+                </div>
+              </div>
+              <div className="mt-8">
+                <button type="submit" className="px-4 py-2 text-base font-medium text-indigo-100 bg-indigo-600 rounded-lg hover:bg-indigo-700">
+                  Guardar
+                </button>
+              </div>
+            </form>
+            <form className="mt-12" onSubmit={handleUpdatePassword}>
+              <h3 className="text-lg font-semibold text-indigo-900">Cambiar Contraseña</h3>
+              <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="password" className="block text-sm font-medium text-gray-700">Contraseña Actual</label>
+                  <input type="password" id="password" value={passwordData.password} onChange={handlePasswordChange} className="block w-full px-4 py-2 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                </div>
+                <div>
+                  <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700">Nueva Contraseña</label>
+                  <input type="password" id="newPassword" value={passwordData.newPassword} onChange={handlePasswordChange} className="block w-full px-4 py-2 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                </div>
+              </div>
+              <div className="mt-8">
+                <button type="submit" className="px-4 py-2 text-base font-medium text-indigo-100 bg-indigo-600 rounded-lg hover:bg-indigo-700">
+                  Actualizar Contraseña
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-    </main>
-</div>
-
-
-  )
+      </main>
+    </div>
+  );
 }
 
-export default user
+export default User;
