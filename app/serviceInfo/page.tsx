@@ -48,277 +48,397 @@ function serviceInfo(){
         </div>
     </aside>
 
-        <section className="container px-4 mx-20 mt-40">
-                <h2 className="text-lg font-medium text-gray-800">Servicios</h2>
-                    <p className="mt-1 text-sm text-gray-500">Podras ver la información y estatus de tus servicios pedidos.</p>
-                    <div className="flex flex-col p-2 md:p-4">
+        
 
-                    <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                        <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                            <div className="overflow-hidden border border-gray-200 md:rounded-lg">
-                                <table className="min-w-full divide-y divide-gray-200">
-                                    <thead className="bg-gray-50">
-                                        <tr>
-                                            <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500">
-                                                <div className="flex items-center gap-x-3">
-                                                    <input type="checkbox" className="text-blue-500 border-gray-300 rounded "/>
-                                                    <button className="flex items-center gap-x-2">
-                                                        <span>Servicio</span>
+    <div className="bg-white">
+    
+    <div className="relative z-40 lg:hidden" role="dialog" aria-modal="true">
+    
+        <div className="fixed inset-0 bg-black bg-opacity-25"></div>
 
-                                                        <svg className="h-3" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M2.13347 0.0999756H2.98516L5.01902 4.79058H3.86226L3.45549 3.79907H1.63772L1.24366 4.79058H0.0996094L2.13347 0.0999756ZM2.54025 1.46012L1.96822 2.92196H3.11227L2.54025 1.46012Z" fill="currentColor" stroke="currentColor" stroke-width="0.1" />
-                                                            <path d="M0.722656 9.60832L3.09974 6.78633H0.811638V5.87109H4.35819V6.78633L2.01925 9.60832H4.43446V10.5617H0.722656V9.60832Z" fill="currentColor" stroke="currentColor" stroke-width="0.1" />
-                                                            <path d="M8.45558 7.25664V7.40664H8.60558H9.66065C9.72481 7.40664 9.74667 7.42274 9.75141 7.42691C9.75148 7.42808 9.75146 7.42993 9.75116 7.43262C9.75001 7.44265 9.74458 7.46304 9.72525 7.49314C9.72522 7.4932 9.72518 7.49326 9.72514 7.49332L7.86959 10.3529L7.86924 10.3534C7.83227 10.4109 7.79863 10.418 7.78568 10.418C7.77272 10.418 7.73908 10.4109 7.70211 10.3534L7.70177 10.3529L5.84621 7.49332C5.84617 7.49325 5.84612 7.49318 5.84608 7.49311C5.82677 7.46302 5.82135 7.44264 5.8202 7.43262C5.81989 7.42993 5.81987 7.42808 5.81994 7.42691C5.82469 7.42274 5.84655 7.40664 5.91071 7.40664H6.96578H7.11578V7.25664V0.633865C7.11578 0.42434 7.29014 0.249976 7.49967 0.249976H8.07169C8.28121 0.249976 8.45558 0.42434 8.45558 0.633865V7.25664Z" fill="currentColor" stroke="currentColor" stroke-width="0.3" />
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </th>
+        <div className="fixed inset-0 z-40 flex">
+        
+        <div className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl">
+            <div className="flex px-4 pb-2 pt-5">
+            <button type="button" className="-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400">
+                <span className="sr-only">Close menu</span>
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            </div>
 
-                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
-                                                Fecha de Servicio
-                                            </th>
+            {/* <!-- Links --> */}
+            <div className="mt-2">
+            <div className="border-b border-gray-200">
+                <div className="-mb-px flex space-x-8 px-4" aria-orientation="horizontal" role="tablist">
+                {/* <!-- Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-900" --> */}
+                <button id="tabs-1-tab-1" className="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium" aria-controls="tabs-1-panel-1" role="tab" type="button">Women</button>
+                {/* <!-- Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-900" --> */}
+                <button id="tabs-1-tab-2" className="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium" aria-controls="tabs-1-panel-2" role="tab" type="button">Men</button>
+                </div>
+            </div>
 
-                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
-                                                Estatus
-                                            </th>
-
-                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
-                                                Tecnico
-                                            </th>
-
-                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
-                                                Tipo de Servicio
-                                            </th>
-
-                                            <th scope="col" className="relative py-3.5 px-4">
-                                                <span className="sr-only">Actions</span>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="bg-white divide-y divide-gray-200 ">
-                                        <tr>
-                                            <td className="px-4 py-4 text-sm font-medium text-gray-700  whitespace-nowrap">
-                                                <div className="inline-flex items-center gap-x-3">
-                                                    <input type="checkbox" className="text-blue-500 border-gray-300 rounded "/>
-
-                                                    <span>#3066</span>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">Jan 6, 2022</td>
-                                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-700 bg-emerald-100/60 ">
-                                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                                    </svg>
-
-                                                    <h2 className="text-sm font-normal">Paid</h2>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                <div className="flex items-center gap-x-2">
-                                                    {/* <img className="object-cover w-8 h-8 rounded-full" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" alt=""> */}
-                                                    <div>
-                                                        <h2 className="text-sm font-medium text-gray-800">Arthur Melo</h2>
-                                                        <p className="text-xs font-normal text-gray-600">authurmelo@example.com</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">Monthly subscription</td>
-                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                <div className="flex items-center gap-x-6">
-                                                    <button type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-blue-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
-                                                        Visualizar Servicio
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                <div className="inline-flex items-center gap-x-3">
-                                                    <input type="checkbox" className="text-blue-500 border-gray-300 rounded"/>
-
-                                                    <span>#3065</span>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">Jan 5, 2022</td>
-                                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                <div className="inline-flex items-center px-3 py-1 text-red-500 rounded-full gap-x-2 bg-red-100/60">
-                                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M9 3L3 9M3 3L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                                    </svg>
-
-                                                    <h2 className="text-sm font-normal">Cancelled</h2>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                <div className="flex items-center gap-x-2">
-                                                    {/* <img className="object-cover w-8 h-8 rounded-full" src="https://images.unsplash.com/photo-1531590878845-12627191e687?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80" alt=""> */}
-                                                    <div>
-                                                        <h2 className="text-sm font-medium text-gray-800">Andi Lane</h2>
-                                                        <p className="text-xs font-normal text-gray-600">andi@example.com</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">Monthly subscription</td>
-                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                <div className="flex items-center gap-x-6">
-                                                    <button type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-blue-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
-                                                        Visualizar Servicio
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                <div className="inline-flex items-center gap-x-3">
-                                                    <input type="checkbox" className="text-blue-500 border-gray-300 rounded"/>
-
-                                                    <span>#3064</span>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">Jan 5, 2022</td>
-                                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60">
-                                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                                    </svg>
-
-                                                    <h2 className="text-sm font-normal">Paid</h2>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                <div className="flex items-center gap-x-2">
-                                                    {/* <img className="object-cover w-8 h-8 rounded-full" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=761&q=80" alt=""> */}
-                                                    <div>
-                                                        <h2 className="text-sm font-medium text-gray-800">Kate Morrison</h2>
-                                                        <p className="text-xs font-normal text-gray-600">kate@example.com</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">Monthly subscription</td>
-                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                <div className="flex items-center gap-x-6">
-                                                    <button type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-blue-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
-                                                        Visualizar Servicio
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td className="px-4 py-4 text-sm font-medium text-gray-70 whitespace-nowrap">
-                                                <div className="inline-flex items-center gap-x-3">
-                                                    <input type="checkbox" className="text-blue-500 border-gray-300 rounded"/>
-
-                                                    <span>#3063</span>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">Jan 4, 2022</td>
-                                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60">
-                                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                                    </svg>
-
-                                                    <h2 className="text-sm font-normal">Paid</h2>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                <div className="flex items-center gap-x-2">
-                                                    {/* <img className="object-cover w-8 h-8 rounded-full" src="https://images.unsplash.com/photo-1506863530036-1efeddceb993?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1344&q=80" alt=""> */}
-                                                    <div>
-                                                        <h2 className="text-sm font-medium text-gray-800">Candice Wu</h2>
-                                                        <p className="text-xs font-normal text-gray-600">candice@example.com</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">Monthly subscription</td>
-                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                <div className="flex items-center gap-x-6">
-                                                    <button type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-blue-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
-                                                        Visualizar Servicio
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                <div className="inline-flex items-center gap-x-3">
-                                                    <input type="checkbox" className="text-blue-500 border-gray-300 rounded"/>
-
-                                                    <span>#3062</span>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">Jan 4, 2022</td>
-                                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                <div className="inline-flex items-center px-3 py-1 text-gray-500 rounded-full gap-x-2 bg-gray-100/60">
-                                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M4.5 7L2 4.5M2 4.5L4.5 2M2 4.5H8C8.53043 4.5 9.03914 4.71071 9.41421 5.08579C9.78929 5.46086 10 5.96957 10 6.5V10" stroke="#667085" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                                    </svg>
-
-                                                    <h2 className="text-sm font-normal">Refunded</h2>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                <div className="flex items-center gap-x-2">
-                                                    {/* <img className="object-cover w-8 h-8 rounded-full" src="https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=644&q=80" alt=""> */}
-                                                    <div>
-                                                        <h2 className="text-sm font-medium text-gray-800">Orlando Diggs</h2>
-                                                        <p className="text-xs font-normal text-gray-600">orlando@example.com</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">Monthly subscription</td>
-                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                <div className="flex items-center gap-x-6">
-                                                    <button type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-blue-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
-                                                        Visualizar Servicio
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+            {/* <!-- 'Women' tab panel, show/hide based on tab state. --> */}
+            <div id="tabs-1-panel-1" className="space-y-12 px-4 pb-6 pt-10" aria-labelledby="tabs-1-tab-1" role="tabpanel">
+                <div className="grid grid-cols-1 items-start gap-x-6 gap-y-10">
+                <div className="grid grid-cols-1 gap-x-6 gap-y-10">
+                    <div>
+                    <p id="mobile-featured-heading-0" className="font-medium text-gray-900">Featured</p>
+                    <ul role="list" aria-labelledby="mobile-featured-heading-0" className="mt-6 space-y-6">
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Sleep</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Swimwear</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Underwear</a>
+                        </li>
+                    </ul>
+                    </div>
+                    <div>
+                    <p id="mobile-categories-heading" className="font-medium text-gray-900">Categories</p>
+                    <ul role="list" aria-labelledby="mobile-categories-heading" className="mt-6 space-y-6">
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Basic Tees</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Artwork Tees</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Bottoms</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Underwear</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Accessories</a>
+                        </li>
+                    </ul>
                     </div>
                 </div>
-
-                <div className="flex items-center justify-between mt-6">
-                    <a href="#" className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-5 h-5 rtl:-scale-x-100">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
-                        </svg>
-
-                        <span>
-                            previous
-                        </span>
-                    </a>
-
-                    <div className="items-center hidden md:flex gap-x-3">
-                        <a href="#" className="px-2 py-1 text-sm text-blue-500 rounded-md bg-blue-100/60">1</a>
-                        <a href="#" className="px-2 py-1 text-sm text-gray-500 rounded-md hover:bg-gray-100">2</a>
-                        <a href="#" className="px-2 py-1 text-sm text-gray-500 rounded-md hover:bg-gray-100">3</a>
-                        <a href="#" className="px-2 py-1 text-sm text-gray-500 rounded-md hover:bg-gray-100">...</a>
-                        <a href="#" className="px-2 py-1 text-sm text-gray-500 rounded-md hover:bg-gray-100">12</a>
-                        <a href="#" className="px-2 py-1 text-sm text-gray-500 rounded-md hover:bg-gray-100">13</a>
-                        <a href="#" className="px-2 py-1 text-sm text-gray-500 rounded-md hover:bg-gray-100">14</a>
+                <div className="grid grid-cols-1 gap-x-6 gap-y-10">
+                    <div>
+                    <p id="mobile-collection-heading" className="font-medium text-gray-900">Collection</p>
+                    <ul role="list" aria-labelledby="mobile-collection-heading" className="mt-6 space-y-6">
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Everything</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Core</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">New Arrivals</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Sale</a>
+                        </li>
+                    </ul>
                     </div>
 
-                    <a href="#" className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100">
-                        <span>
-                            Next
-                        </span>
-
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-5 h-5 rtl:-scale-x-100">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-                        </svg>
-                    </a>
+                    <div>
+                    <p id="mobile-brand-heading" className="font-medium text-gray-900">Brands</p>
+                    <ul role="list" aria-labelledby="mobile-brand-heading" className="mt-6 space-y-6">
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Full Nelson</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">My Way</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Re-Arranged</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Counterfeit</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Significant Other</a>
+                        </li>
+                    </ul>
+                    </div>
                 </div>
-            </section>
+                </div>
+            </div>
+            {/* <!-- 'Men' tab panel, show/hide based on tab state. --> */}
+            <div id="tabs-1-panel-2" className="space-y-12 px-4 pb-6 pt-10" aria-labelledby="tabs-1-tab-2" role="tabpanel">
+                <div className="grid grid-cols-1 items-start gap-x-6 gap-y-10">
+                <div className="grid grid-cols-1 gap-x-6 gap-y-10">
+                    <div>
+                    <p id="mobile-featured-heading-1" className="font-medium text-gray-900">Featured</p>
+                    <ul role="list" aria-labelledby="mobile-featured-heading-1" className="mt-6 space-y-6">
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Casual</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Boxers</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Outdoor</a>
+                        </li>
+                    </ul>
+                    </div>
+                    <div>
+                    <p id="mobile-categories-heading" className="font-medium text-gray-900">Categories</p>
+                    <ul role="list" aria-labelledby="mobile-categories-heading" className="mt-6 space-y-6">
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Artwork Tees</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Pants</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Accessories</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Boxers</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Basic Tees</a>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+                <div className="grid grid-cols-1 gap-x-6 gap-y-10">
+                    <div>
+                    <p id="mobile-collection-heading" className="font-medium text-gray-900">Collection</p>
+                    <ul role="list" aria-labelledby="mobile-collection-heading" className="mt-6 space-y-6">
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Everything</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Core</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">New Arrivals</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Sale</a>
+                        </li>
+                    </ul>
+                    </div>
+
+                    <div>
+                    <p id="mobile-brand-heading" className="font-medium text-gray-900">Brands</p>
+                    <ul role="list" aria-labelledby="mobile-brand-heading" className="mt-6 space-y-6">
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Significant Other</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">My Way</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Counterfeit</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Re-Arranged</a>
+                        </li>
+                        <li className="flex">
+                        <a href="#" className="text-gray-500">Full Nelson</a>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+
+            <div className="space-y-6 border-t border-gray-200 px-4 py-6">
+            <div className="flow-root">
+                <a href="#" className="-m-2 block p-2 font-medium text-gray-900">Company</a>
+            </div>
+            <div className="flow-root">
+                <a href="#" className="-m-2 block p-2 font-medium text-gray-900">Stores</a>
+            </div>
+            </div>
+
+            <div className="space-y-6 border-t border-gray-200 px-4 py-6">
+            <div className="flow-root">
+                <a href="#" className="-m-2 block p-2 font-medium text-gray-900">Create an account</a>
+            </div>
+            <div className="flow-root">
+                <a href="#" className="-m-2 block p-2 font-medium text-gray-900">Sign in</a>
+            </div>
+            </div>
+
+            <div className="space-y-6 border-t border-gray-200 px-4 py-6">
+            {/* <!-- Currency selector --> */}
+            <form>
+                <div className="inline-block">
+                <label htmlFor="mobile-currency" className="sr-only">Currency</label>
+                <div className="group relative -ml-2 rounded-md border-transparent focus-within:ring-2 focus-within:ring-white">
+                    <select id="mobile-currency" name="currency" className="flex items-center rounded-md border-transparent bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-gray-700 focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-800">
+                    <option>CAD</option>
+                    <option>USD</option>
+                    <option>AUD</option>
+                    <option>EUR</option>
+                    <option>GBP</option>
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center">
+                    <svg className="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                    </svg>
+                    </div>
+                </div>
+                </div>
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    
+    <main className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 mt-10">
+        <h1 className="text-3xl font-bold tracking-tight text-gray-900">Ordenes</h1>
+
+        <div className="mt-2 border-b border-gray-200 pb-5 text-sm sm:flex sm:justify-between">
+        <dl className="flex">
+            <dt className="text-gray-500">Orden&nbsp;</dt>
+            <dd className="font-medium text-gray-900">W086438695</dd>
+            <dt>
+            <span className="sr-only">Fecha</span>
+            <span className="mx-2 text-gray-400" aria-hidden="true">&middot;</span>
+            </dt>
+            <dd className="font-medium text-gray-900"><time dateTime="2021-03-22">Mayo 22, 2024</time></dd>
+        </dl>
+        <div className="mt-4 sm:mt-0">
+            {/* <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+            View invoice
+            <span aria-hidden="true"> &rarr;</span>
+            </a> */}
+
+            <div>
+            <span className="py-1 px-2 inline-flex text-sm items-center gap-x-1 font-medium bg-teal-100 text-teal-800 rounded-full dark:bg-teal-500/10 dark:text-teal-500">
+                <svg className="flex-shrink-0 size-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                <path d="m9 12 2 2 4-4"></path>
+                </svg>
+                Connected
+            </span>
+            </div>
+        </div>
+        </div>
+
+        <section aria-labelledby="products-heading" className="mt-8">
+        <h2 id="products-heading" className="sr-only">Products purchased</h2>
+
+        <div className="space-y-24">
+            <div className="grid grid-cols-1 text-sm sm:grid-cols-12 sm:grid-rows-1 sm:gap-x-6 md:gap-x-8 lg:gap-x-8">
+            <div className="sm:col-span-4 md:col-span-5 md:row-span-2 md:row-end-2">
+                <div className="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-50">
+                {/* <img src="https://tailwindui.com/img/ecommerce-images/confirmation-page-04-product-01.jpg" alt="Off-white t-shirt with circular dot illustration on the front of mountain ridges that fade." className="object-cover object-center"> */}
+                    <div>
+                        <Image 
+                        width={335}
+                        height={93} 
+                        src="/monitor.jpg" 
+                        alt="Off-white t-shirt with circular dot illustration on the front of mountain ridges that fade." 
+                        className="object-cover object-center" />
+                    </div>
+                </div>
+            </div>
+            <div className="mt-6 sm:col-span-7 sm:mt-0 md:row-end-1">
+                <h3 className="text-lg font-bold text-gray-900">
+                <a href="#">Monitor Vital</a>
+                </h3>
+                <p className="mt-1 font-medium text-blue-600">Mantenimiento</p>
+                <p className="mt-1 font-medium text-gray-900">$55.00</p>
+                <p className="mt-3 text-gray-500">Informacion de la solicitud del servicio del equipo medico.</p>
+            </div>
+            <div className="sm:col-span-12 md:col-span-7">
+                <dl className="grid grid-cols-1 gap-y-8 border-b border-gray-200 py-8 sm:grid-cols-2 sm:gap-x-6 sm:py-6 md:py-10">
+                <div>
+                    <dt className="font-medium text-gray-900">Direccion del servicio</dt>
+                    <dd className="mt-3 text-gray-500">
+                    <span className="block">Residencia Sol</span>
+                    <span className="block">Calle 55 con 12</span>
+                    <span className="block">Venezuela, Barquisimeto</span>
+                    </dd>
+                </div>
+                <div>
+                    <dt className="font-medium text-gray-900">Datos del cliente</dt>
+                    <dd className="mt-3 space-y-3 text-gray-500">
+                    <p>fake@example.com</p>
+                    <p>1245346540</p>
+                    </dd>
+                </div>
+                </dl>
+                <div className="flex items-center justify-between pt-4">
+                <dt className="font-medium text-gray-900">Total de la orden</dt>
+                <dd className="font-medium text-indigo-600">$46.75</dd>
+                </div>                
+                {/* <div className="mt-6">
+                <div className="overflow-hidden rounded-full bg-gray-200">
+                    <div className="h-2 rounded-full bg-indigo-600"></div>
+                </div>
+                <div className="mt-6 hidden grid-cols-4 font-medium text-gray-600 sm:grid">
+                    <div className="text-indigo-600">Order placed</div>
+                    <div className="text-center text-indigo-600">Processing</div>
+                    <div className="text-center">Shipped</div>
+                    <div className="text-right">Delivered</div>
+                </div>
+                </div> */}
+            </div>
+            </div>
+
+            {/* <!-- More products... --> */}
+        </div>
+        </section>
+
+        {/* <!-- Billing --> */}
+        <section aria-labelledby="summary-heading" className="mt-10">
+        {/* <h2 id="summary-heading" className="sr-only">Billing Summary</h2> */}
+
+        <div className="rounded-lg bg-gray-50 px-6 py-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-0 lg:py-8">
+            <dl className="grid grid-cols-1 gap-6 text-sm sm:grid-cols-2 md:gap-x-8 lg:col-span-5 lg:pl-8">
+            <div>
+                <dt className="font-medium text-gray-900">Garantia</dt>
+                <dd className="mt-3 text-gray-500">
+                <span className="block">6 meses</span>
+                <span className="block">25 de Octubre de 2024</span>
+                <span className="py-1 px-2 inline-flex items-center gap-x-1 text-xs bg-gray-300 text-gray-800 rounded-full">
+                        <svg className="flex-shrink-0 size-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
+                        <line x1="12" x2="12" y1="2" y2="12"></line>
+                        </svg>
+                        Sin garantia
+                </span>
+                </dd>
+            </div>
+            <div>
+                <dt className="font-medium text-gray-900">Informacion de Pago</dt>
+                <dd className="mt-3 flex">
+                <div>
+                    {/* <svg aria-hidden="true" width="36" height="24" viewBox="0 0 36 24" className="h-6 w-auto">
+                    <rect width="36" height="24" rx="4" fill="#224DBA" />
+                    <path d="M10.925 15.673H8.874l-1.538-6c-.073-.276-.228-.52-.456-.635A6.575 6.575 0 005 8.403v-.231h3.304c.456 0 .798.347.855.75l.798 4.328 2.05-5.078h1.994l-3.076 7.5zm4.216 0h-1.937L14.8 8.172h1.937l-1.595 7.5zm4.101-5.422c.057-.404.399-.635.798-.635a3.54 3.54 0 011.88.346l.342-1.615A4.808 4.808 0 0020.496 8c-1.88 0-3.248 1.039-3.248 2.481 0 1.097.969 1.673 1.653 2.02.74.346 1.025.577.968.923 0 .519-.57.75-1.139.75a4.795 4.795 0 01-1.994-.462l-.342 1.616a5.48 5.48 0 002.108.404c2.108.057 3.418-.981 3.418-2.539 0-1.962-2.678-2.077-2.678-2.942zm9.457 5.422L27.16 8.172h-1.652a.858.858 0 00-.798.577l-2.848 6.924h1.994l.398-1.096h2.45l.228 1.096h1.766zm-2.905-5.482l.57 2.827h-1.596l1.026-2.827z" fill="#fff" />
+                    </svg>
+                    <p className="sr-only">Visa</p> */}
+                </div>
+                <div className="ml-4">
+                    <p className="text-gray-600">Tipo de Pago:</p>
+                    <p className="text-gray-600">34467577</p>
+                    
+                </div>
+                </dd>
+            </div>
+            </dl>
+
+            <dl className="mt-8 divide-y divide-gray-200 text-sm lg:col-span-7 lg:mt-0 lg:pr-8">
+            
+            <div className="flex items-center justify-between pt-4">
+                <dt className="font-medium text-gray-900"></dt>
+                <dd className="font-medium text-indigo-600"></dd>
+            </div>
+            </dl>
+        </div>
+        </section>
+    </main>
+
+
+    </div>
+
+
  </div>
 
   )
