@@ -11,6 +11,20 @@ function Navbar() {
   const handleHome = () => {
     router.push('/');
   }
+  const handleInstallCatalog = () => {
+    router.push('/installationCatalog');
+
+  }  
+
+  const handleMaintanceCatalog = () => {
+    router.push('/maintenanceCatalog');
+
+  }  
+
+  const handleRepairCatalog = () => {
+    router.push('/repairCatalog');
+
+  }  
   const handleLogin = () => {
     router.push('/login');
   }
@@ -44,12 +58,17 @@ function Navbar() {
       </button>
     </div>
     <div className="hidden lg:flex lg:gap-x-12">
-      <a href="#" className="text-base font-semibold leading-6 text-white">Equipos</a>
-      <a href="#" className="text-base font-semibold leading-6 text-white">Compañía</a>
+      {/* <a href="#" className="text-base font-semibold leading-6 text-white">Equipos</a>
+      <a href="#" className="text-base font-semibold leading-6 text-white">Compañía</a> */}
+      <a href="#" onClick={handleRepairCatalog}><span className="text-white text-base font-semibold leading-6">Reparación</span></a>
+      <a href="#" onClick={handleMaintanceCatalog}><span className="text-white text-base font-semibold leading-6">Mantenimiento</span></a>
+      <a href="#" onClick={handleInstallCatalog }><span className="text-white text-base font-semibold leading-6">Instalación</span></a>
     </div>
     <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-4">
+   
     <a className="text-primary-blue rounded-full bg-white min-w-[130px] p-2 pl-8" href="#" onClick={handleLogin}>Ingresar</a>
     <a className="text-primary-blue rounded-full bg-white min-w-[130px] p-2 pl-6" href="#" onClick={handleRegister}>Registrarse</a>
+
 
     {/* <CustomButton 
             title="Ingresar"
@@ -66,7 +85,7 @@ function Navbar() {
         <a href="#" className="-m-1.5 p-1.5">
           <span className="sr-only">Your Company</span>
           <Image 
-                src="/Logo2.png"
+                src="/profile.png"
                 alt="Stickerly-logo"
                 width={118}
                 height={18}

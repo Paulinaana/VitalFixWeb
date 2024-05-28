@@ -36,7 +36,7 @@ function Reclaim() {
                         setUser({
                             name: data.name,
                             email: data.email,
-                            urlAvatar: data.urlAvatar || "/mujer-sonriente.jpg"
+                            urlAvatar: data.urlAvatar || "/profile.png"
                         });
                     } else {
                         console.error('Failed to fetch user data');
@@ -122,7 +122,7 @@ function Reclaim() {
                 <div className="flex flex-col items-center mt-16 -mx-2 ">
                     <Image
                         className="object-cover w-24 h-24 mx-2 rounded-full"
-                        src={user.urlAvatar || '/mujer-sonriente.jpg'}
+                        src={user.urlAvatar || '/profile.png'}
                         alt="User Avatar"
                         width={96}
                         height={96}
