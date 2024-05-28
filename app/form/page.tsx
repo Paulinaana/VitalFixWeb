@@ -4,8 +4,11 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import React from 'react';
 import { useAuth } from "@/context/AuthContext";
+import { useRouter } from 'next/navigation';
+
 
 function Form() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     type: '',
     details: '',
@@ -26,14 +29,26 @@ function Form() {
   const [services, setServices] = useState([]);
   const [message, setMessage] = useState({ text: '', type: '' });
   const [showModal, setShowModal] = useState(false); // Estado para controlar si se muestra el modal
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { isAuthenticated } = useAuth();
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     const fetchServices = async () => {
+      const token = localStorage.getItem('token');
+      console.log(token)
+      if (!token) {
+        console.error('No token found');
+        return;
+      }
+      
       try {
-        const response = await axios.get('https://back-vitalfix.onrender.com/api/v1/services');
+        const response = await axios.get('https://back-vitalfix.onrender.com/api/v1/services', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setServices(response.data);
       } catch (error) {
         console.error('Error fetching services:', error);
@@ -42,6 +57,7 @@ function Form() {
 
     const fetchUserData = async () => {
       const token = localStorage.getItem('token');
+      console.log(token)
       if (!token) {
         console.error('No token found');
         return;
@@ -64,6 +80,9 @@ function Form() {
             name: userData.name,
             lastname: userData.lastname,
             email: userData.email,
+            phone: userData.phone,
+            address: userData.address,
+            reference: userData.reference
           }));
         }
       } catch (error) {
@@ -91,7 +110,14 @@ function Form() {
   };
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
+    
+    // envitar envios multiples 
+    if (isSubmitting) return;
+    
+    setIsSubmitting(true);
+    
     const data = new FormData();
     for (const key in formData) {
       data.append(key, formData[key]);
@@ -100,6 +126,7 @@ function Form() {
     const token = localStorage.getItem('token');
     if (!token) {
       console.error('No token found');
+      setIsSubmitting(false);
       return;
     }
 
@@ -111,14 +138,22 @@ function Form() {
         },
       });
       setMessage({ text: 'Solicitud enviada con éxito.', type: 'success' });
-      document.getElementById('hs-basic-modal').classList.remove('hidden');
+      setShowModal(true);
     } catch (error) {
       if (error.response && error.response.data) {
         setMessage({ text: error.response.data.message || 'Error al enviar la solicitud. Inténtalo de nuevo.', type: 'error' });
       } else {
         setMessage({ text: 'Error al enviar la solicitud. Inténtalo de nuevo.', type: 'error' });
       }
+      setShowModal(true);
+    } finally {
+      setIsSubmitting(false);
     }
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+    router.push('/service');
   };
 
   return (
@@ -233,8 +268,11 @@ function Form() {
             </div>
 
             <div className="mt-8">
-              <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                Enviar Solicitud
+              <button 
+                type="submit" 
+                disabled={isSubmitting}
+                className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${isSubmitting ? 'bg-gray-400' : 'bg-indigo-600 hover:bg-indigo-700'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}>
+                {isSubmitting ? 'Enviando...' : 'Enviar Solicitud'}
               </button>
             </div>
           </div>
@@ -261,7 +299,7 @@ function Form() {
                   </div>
                 </div>
                 <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                  <button onClick={() => document.getElementById('hs-basic-modal').classList.add('hidden')} className="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                  <button onClick={handleModalClose} className="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                     Ver servicio
                   </button>
                 </div>
