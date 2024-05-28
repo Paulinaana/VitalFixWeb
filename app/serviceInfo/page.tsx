@@ -9,6 +9,8 @@ function serviceInfo(){
     const router = useRouter();
     const searchParams = useSearchParams();
     const request_id = searchParams.get('id');
+    const token = localStorage.getItem('token');
+
     console.log("eeee", request_id)
     const [user, setUser] = useState({
         name: "",
@@ -16,7 +18,7 @@ function serviceInfo(){
         urlAvatar: "",
     });
 
-    const [requests, setRequests] = useState([]);
+    const [requestData, setRequestData] = useState(null);
 
     const handleProfile = () => {
         router.push('/user');
@@ -31,6 +33,11 @@ function serviceInfo(){
     }
 
     useEffect(() => {
+        console.log(token)
+        if (!token) {
+            router.push('/'); // Redirigir al inicio si no hay token
+            return;
+        }
         const fetchUserData = async () => {
             const userId = localStorage.getItem('userId');
             console.log(userId)
@@ -58,8 +65,8 @@ function serviceInfo(){
             }
         };
 
-        const fetchRequests = async () => {
-            console.log(localStorage.getItem('token'))
+        const fetchRequestData = async () => {
+            console.log(localStorage.getItem('token'));
             try {
                 const response = await fetch(`https://back-vitalfix.onrender.com/api/v1/requests/${request_id}`, {
                     method: 'GET',
@@ -69,23 +76,24 @@ function serviceInfo(){
                 });
                 if (response.ok) {
                     const data = await response.json();
-                    console.log("ejele el data")
-                    console.log(data)
-                    setRequests(data);
-                    console.log(setRequests)
-                    console.log(requests)
-
+                    console.log("Fetched data:", data);
+                    setRequestData(data);
                 } else {
-                    console.error('Failed to fetch requests');
+                    console.error('Failed to fetch request data');
                 }
             } catch (error) {
-                console.error('Error fetching requests:', error);
+                console.error('Error fetching request data:', error);
             }
         };
-        console.log(requests)
+
         fetchUserData();
-        fetchRequests();
-    }, []);
+        fetchRequestData();
+    }, [request_id]);
+
+    if (!requestData) {
+        return <div>Loading...</div>;
+    }
+
 
   return (
     <div className="flex">
@@ -377,7 +385,7 @@ function serviceInfo(){
             <span className="sr-only">Fecha</span>
             <span className="mx-2 text-gray-400" aria-hidden="true">&middot;</span>
             </dt>
-            <dd className="font-medium text-gray-900"><time dateTime="2021-03-22">{requests.createdAt}</time></dd>
+            <dd className="font-medium text-gray-900"><time dateTime="2021-03-22">{requestData.createdAt}</time></dd>
         </dl>
         <div className="mt-4 sm:mt-0">
             {/* <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
@@ -391,7 +399,7 @@ function serviceInfo(){
                 <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
                 <path d="m9 12 2 2 4-4"></path>
                 </svg>
-                {requests.status}
+                {requestData.status}
             </span>
             </div>
         </div>
@@ -409,7 +417,7 @@ function serviceInfo(){
                         <Image 
                         width={335}
                         height={93} 
-                        src="/monitor.jpg" 
+                        src= {requestData.equip?.urlImagen || "/monitor.jpg" } 
                         alt="Off-white t-shirt with circular dot illustration on the front of mountain ridges that fade." 
                         className="object-cover object-center" />
                     </div>
@@ -419,30 +427,30 @@ function serviceInfo(){
                 <h3 className="text-lg font-bold text-gray-900">
                 <a href="#">Monitor Vital</a>
                 </h3>
-                <p className="mt-1 font-medium text-blue-600">Mantenimiento</p>
-                <p className="mt-1 font-medium text-gray-900">$66</p>
-                <p className="mt-3 text-gray-500">{requests.details}</p>
+                <p className="mt-1 font-medium text-blue-600">{requestData.service.name}</p>
+                <p className="mt-1 font-medium text-gray-900">${requestData.service.price}</p>
+                <p className="mt-3 text-gray-500">{requestData.details}</p>
             </div>
             <div className="sm:col-span-12 md:col-span-7">
                 <dl className="grid grid-cols-1 gap-y-8 border-b border-gray-200 py-8 sm:grid-cols-2 sm:gap-x-6 sm:py-6 md:py-10">
                 <div>
                     <dt className="font-medium text-gray-900">Direccion del servicio</dt>
                     <dd className="mt-3 text-gray-500">
-                    <span className="block">{requests.address}</span>
+                    <span className="block">{requestData.address}</span>
                     
                     </dd>
                 </div>
                 <div>
                     <dt className="font-medium text-gray-900">Datos del cliente</dt>
                     <dd className="mt-3 space-y-3 text-gray-500">
-                    <p>{requests.email}</p>
-                    <p>{requests.phone}</p>
+                    <p>{requestData.email}</p>
+                    <p>{requestData.phone}</p>
                     </dd>
                 </div>
                 </dl>
                 <div className="flex items-center justify-between pt-4">
                 <dt className="font-medium text-gray-900">Total de la orden</dt>
-                <dd className="font-medium text-indigo-600">$46.75</dd>
+                <dd className="font-medium text-indigo-600">${requestData.service.price}</dd>
                 </div>                
                 {/* <div className="mt-6">
                 <div className="overflow-hidden rounded-full bg-gray-200">

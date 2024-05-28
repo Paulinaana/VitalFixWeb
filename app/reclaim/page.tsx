@@ -5,6 +5,8 @@ import Image from 'next/image';
 
 function Reclaim() {
     const router = useRouter();
+    const token = localStorage.getItem('token');
+
     const [user, setUser] = useState({
         name: "",
         email: "",
@@ -21,6 +23,12 @@ function Reclaim() {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
+        console.log(token)
+        if (!token) {
+            router.push('/'); // Redirigir al inicio si no hay token
+            return;
+        }
+
         const fetchUserData = async () => {
             const userId = localStorage.getItem('userId');
             if (userId) {

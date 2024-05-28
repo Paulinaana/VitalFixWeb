@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 function Service() {
+    const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
     const router = useRouter();
     const [user, setUser] = useState({
@@ -29,6 +30,11 @@ function Service() {
     }
 
     useEffect(() => {
+        console.log(token)
+        if (!token) {
+            router.push('/'); // Redirigir al inicio si no hay token
+            return;
+        }
         const fetchUserData = async () => {
             const userId = localStorage.getItem('userId');
             console.log(userId)
@@ -170,7 +176,7 @@ function Service() {
                                                     </div>
                                                 </td>
                                                 <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">{request.service.name}</td>
-                                                <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">{request.equip.name}</td>
+                                                <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">{request.equip?.name || "N/A"}</td>
                                                 <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">{new Date(request.createdAt).toLocaleDateString()}</td>
                                                 <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">{request.status}</td>
                                                 <td className="px-4 py-4 text-sm font-medium text-right whitespace-nowrap">

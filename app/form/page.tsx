@@ -8,6 +8,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 function Form() {
   const router = useRouter();
+  const token = localStorage.getItem('token');
+
   const searchParams = useSearchParams();
   const product_id = searchParams.get('id');
   const [formData, setFormData] = useState({
@@ -38,6 +40,11 @@ function Form() {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
+    console.log(token)
+    if (!token) {
+        router.push('/'); // Redirigir al inicio si no hay token
+        return;
+    }
     const fetchEquip = async () => {
       const token = localStorage.getItem('token');
       if (!token) {

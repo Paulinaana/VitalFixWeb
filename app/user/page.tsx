@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 function User() {
+  const token = localStorage.getItem('token');
   const router = useRouter();
   const [user, setUser] = useState({
     name: "",
@@ -35,6 +36,11 @@ function User() {
   };
 
   useEffect(() => {
+    console.log(token)
+    if (!token) {
+        router.push('/'); // Redirigir al inicio si no hay token
+        return;
+    }
     const fetchUserData = async () => {
       const userId = localStorage.getItem('userId');
       if (userId) {

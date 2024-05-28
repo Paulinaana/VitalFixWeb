@@ -7,12 +7,19 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import CustomProductDetail from '@/components/CustomProductDetail';
 
 function ProductDetail() {
+    const router = useRouter();
+    const token = localStorage.getItem('token');
     const searchParams = useSearchParams();
     const product_id = searchParams.get('id');
     console.log("eeee", product_id)
     const [product, setProduct] = useState(null);
 
     useEffect(() => {
+        console.log(token)
+        if (!token) {
+            router.push('/'); // Redirigir al inicio si no hay token
+            return;
+        }
         const fetchProductDetails = async () => {
             const token = localStorage.getItem('token');
             console.log(token);
