@@ -12,13 +12,9 @@ function User() {
     username: "",
     email: "",
     phone: "",
-    country: "Venezuela",
     address: "",
-    references: "",
-    city: "",
-    state: "",
-    zipCode: "",
-    urlAvatar: "/profile.png"
+    reference: "",
+    urlAvatar: "/profile.pn
   });
 
   const [passwordData, setPasswordData] = useState({
@@ -57,9 +53,8 @@ function User() {
               username: data.username,
               email: data.email,
               phone: data.phone,
-              country: data.country,
               address: data.address,
-              references: data.references,
+              reference: data.reference,
               city: data.city,
               state: data.state,
               zipCode: data.zipCode,
@@ -112,7 +107,7 @@ function User() {
     const userId = localStorage.getItem('userId');
     if (userId) {
       try {
-        const response = await fetch(`https://back-vitalfix.onrender.com/api/v1/users/${userId}`, {
+        const response = await fetch(`https://back-vitalfix.onrender.com/api/v1/updateProfile/${userId}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
@@ -235,8 +230,8 @@ function User() {
                     <input type="text" id="address" value={user.address} className='w-full text-black py-2 my-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500' />
                   </div>
                   <div>
-                    <label htmlFor="references" className="block text-sm font-medium text-gray-700">Referencias</label>
-                    <input type="text" id="references" value={user.references} className='w-full text-black py-2 my-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500' />
+                    <label htmlFor="reference" className="block text-sm font-medium text-gray-700">Referencias</label>
+                    <input type="text" id="reference" value={user.reference} className='w-full text-black py-2 my-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500' />
                   </div>
                   {/* <div>
                     <label htmlFor="city" className="block text-sm font-medium text-gray-700">Ciudad</label>

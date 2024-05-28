@@ -9,6 +9,9 @@ const Register = () => {
     name: '',
     lastname: '',
     email: '',
+    reference: '',
+    address: '',
+    phone: '',
     password: '',
     urlAvatar: ''
   });
@@ -28,13 +31,16 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, lastname, email, password, urlAvatar } = formData;
+    const { name, lastname, email, reference, address, phone, password, urlAvatar } = formData;
 
     const requestBody = {
       role: 'user',
       name,
       lastname,
       email,
+      reference,
+      address,
+      phone,
       password,
       urlAvatar: undefined
     };
@@ -104,6 +110,30 @@ const Register = () => {
                 className='w-full text-black py-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500'
               />
               <input
+                type="text"
+                name="reference"
+                placeholder='Referencia'
+                value={formData.reference}
+                onChange={handleChange}
+                className='w-full text-black py-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500'
+              />
+              <input
+                type="text"
+                name="address"
+                placeholder='Direccion'
+                value={formData.address}
+                onChange={handleChange}
+                className='w-full text-black py-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500'
+              />
+              <input
+                type="text"
+                name="phone"
+                placeholder='Telefono'
+                value={formData.phone}
+                onChange={handleChange}
+                className='w-full text-black py-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500'
+              />
+              <input
                 type={showPassword ? 'text' : 'password'}
                 name="password"
                 placeholder='Contraseña'
@@ -112,22 +142,6 @@ const Register = () => {
                 className='w-full text-black py-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500'
               />
             </div>
-
-            {/* <div className='mt-6'>
-              <label htmlFor="file-upload" className='block text-sm font-medium text-gray-700'>
-                Selecciona una imagen de avatar
-              </label>
-              <input
-                type="file"
-                id="file-upload"
-                name="file-upload"
-                onChange={handleFileChange}
-                className='mt-1'
-              />
-              {formData.urlAvatar && (
-                <p className='mt-2 text-sm text-gray-600'>Imagen seleccionada</p>
-              )}
-            </div> */}
 
             <div className='w-full flex items-center justify-between mt-6'>
               <div className='flex items-center'>
