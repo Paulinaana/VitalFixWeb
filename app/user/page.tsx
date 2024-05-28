@@ -18,7 +18,7 @@ function User() {
     city: "",
     state: "",
     zipCode: "",
-    urlAvatar: "/mujer-sonriente.jpg"
+    urlAvatar: "/profile.png"
   });
 
   const [passwordData, setPasswordData] = useState({
@@ -63,7 +63,7 @@ function User() {
               city: data.city,
               state: data.state,
               zipCode: data.zipCode,
-              urlAvatar: data.urlAvatar || "/mujer-sonriente.jpg"
+              urlAvatar: data.urlAvatar || "/profile.png"
             });
           } else {
             console.error('Failed to fetch user data');

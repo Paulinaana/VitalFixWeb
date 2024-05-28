@@ -48,7 +48,7 @@
               Nuestros servicio son los mejores. Pide uno y aprovecha la promoción.
             </p>
             <a
-              href="#"
+              href="/register"
               className="mt-6 inline-block w-full rounded-md border border-transparent bg-gray-900 px-8 py-3 font-medium text-white hover:bg-gray-800 sm:w-auto"
             >
               Obten tu servicio a tiempo

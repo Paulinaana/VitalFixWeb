@@ -118,7 +118,7 @@ function NavbarUser() {
                 <span className="sr-only">Open user menu</span>
                 <div className="inline-block h-10 w-10 rounded-full ring-2 ring-white">
                   <Image
-                    src={user.urlAvatar || '/mujer-sonriente.jpg'}
+                    src={user.urlAvatar || '/profile.png'}
                     alt="User Profile"
                     width={40}
                     height={40}
