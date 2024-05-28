@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 function Service() {
+    const userId = localStorage.getItem('userId');
     const router = useRouter();
     const [user, setUser] = useState({
         name: "",
@@ -30,6 +31,7 @@ function Service() {
     useEffect(() => {
         const fetchUserData = async () => {
             const userId = localStorage.getItem('userId');
+            console.log(userId)
             if (userId) {
                 try {
                     const response = await fetch(`https://back-vitalfix.onrender.com/api/v1/users/${userId}`, {
@@ -55,8 +57,9 @@ function Service() {
         };
 
         const fetchRequests = async () => {
+            console.log(localStorage.getItem('token'))
             try {
-                const response = await fetch('https://back-vitalfix.onrender.com/api/v1/requests/byUser', {
+                const response = await fetch(`https://back-vitalfix.onrender.com/api/v1/requests/byUser/${userId}`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -144,6 +147,9 @@ function Service() {
                                                 Tipo de Servicio
                                             </th>
                                             <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500">
+                                                Equipo
+                                            </th>
+                                            <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500">
                                                 Fecha de Solicitud
                                             </th>
                                             <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500">
@@ -164,10 +170,11 @@ function Service() {
                                                     </div>
                                                 </td>
                                                 <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">{request.service.name}</td>
+                                                <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">{request.equip.name}</td>
                                                 <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">{new Date(request.createdAt).toLocaleDateString()}</td>
                                                 <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">{request.status}</td>
                                                 <td className="px-4 py-4 text-sm font-medium text-right whitespace-nowrap">
-                                                    <button type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-blue-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
+                                                    <button onClick={() => router.push(`/serviceInfo?id=${request.id}`)} type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-blue-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
                                                         Visualizar Servicio
                                                     </button>
                                                     {/* <a href="#" className="text-blue-500 hover:text-blue-700">Ver</a> */}

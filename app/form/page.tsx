@@ -4,13 +4,15 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import React from 'react';
 import { useAuth } from "@/context/AuthContext";
-import { useRouter } from 'next/navigation';
-
+import { useRouter, useSearchParams } from 'next/navigation';
 
 function Form() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const product_id = searchParams.get('id');
   const [formData, setFormData] = useState({
     type: '',
+    equipId: product_id || '',
     details: '',
     maker: '',
     model: '',
@@ -27,22 +29,41 @@ function Form() {
   });
 
   const [services, setServices] = useState([]);
+  const [equips, setEquips] = useState([]);
   const [message, setMessage] = useState({ text: '', type: '' });
-  const [showModal, setShowModal] = useState(false); // Estado para controlar si se muestra el modal
+  const [showModal, setShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { isAuthenticated } = useAuth();
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    const fetchServices = async () => {
+    const fetchEquip = async () => {
       const token = localStorage.getItem('token');
-      console.log(token)
       if (!token) {
         console.error('No token found');
         return;
       }
-      
+
+      try {
+        const response = await axios.get('https://back-vitalfix.onrender.com/api/v1/equips', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setEquips(response.data);
+      } catch (error) {
+        console.error('Error fetching equips:', error);
+      }
+    };
+
+    const fetchServices = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error('No token found');
+        return;
+      }
+
       try {
         const response = await axios.get('https://back-vitalfix.onrender.com/api/v1/services', {
           headers: {
@@ -57,7 +78,6 @@ function Form() {
 
     const fetchUserData = async () => {
       const token = localStorage.getItem('token');
-      console.log(token)
       if (!token) {
         console.error('No token found');
         return;
@@ -82,7 +102,7 @@ function Form() {
             email: userData.email,
             phone: userData.phone,
             address: userData.address,
-            reference: userData.reference
+            reference: userData.reference,
           }));
         }
       } catch (error) {
@@ -92,9 +112,10 @@ function Form() {
 
     if (message.text !== '') {
       setShowModal(true);
-    } 
+    }
 
     if (isAuthenticated) {
+      fetchEquip();
       fetchServices();
       fetchUserData();
     }
@@ -110,14 +131,12 @@ function Form() {
   };
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
-    
-    // envitar envios multiples 
+
     if (isSubmitting) return;
-    
+
     setIsSubmitting(true);
-    
+
     const data = new FormData();
     for (const key in formData) {
       data.append(key, formData[key]);
@@ -152,8 +171,8 @@ function Form() {
   };
 
   const handleModalClose = () => {
+    
     setShowModal(false);
-    router.push('/service');
   };
 
   return (
@@ -181,6 +200,16 @@ function Form() {
               </div>
 
               <div className="mt-4">
+                <label htmlFor="equipId" className="block text-sm font-medium text-gray-700">Producto</label>
+                <select id="equipId" name="equipId" value={formData.equipId} onChange={handleChange} className='w-full text-black py-2 my-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500' disabled={!!product_id}>
+                  <option value="">Seleccionar</option>
+                  {equips.map(equip => (
+                    <option key={equip.id} value={equip.id}>{equip.name}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="mt-4">
                 <label htmlFor="details" className="block text-sm font-medium text-gray-700">Detalles del Equipo</label>
                 <input type="text" name="details" id="details" value={formData.details} onChange={handleChange} className='w-full text-black py-2 my-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500' />
               </div>
@@ -196,45 +225,19 @@ function Form() {
               </div>
 
               <div className="mt-4">
-                <label htmlFor="serial" className="block text-sm font-medium text-gray-700">Número de Serial</label>
+                <label htmlFor="serial" className="block text-sm font-medium text-gray-700">Número de Serie</label>
                 <input type="text" name="serial" id="serial" value={formData.serial} onChange={handleChange} className='w-full text-black py-2 my-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500' />
               </div>
 
               <div className="mt-4">
-                <label htmlFor="description" className="block text-sm font-medium text-gray-700">Descripción del Equipo</label>
-                <textarea id="description" name="description" value={formData.description} onChange={handleChange} className='w-full text-black py-2 my-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500'></textarea>
-                <p className="mt-2 text-sm text-gray-600">Escribe los detalles del la situación del equipo.</p>
-              </div>
-
-              <div className="mt-4">
-                <label htmlFor="status" className="block text-sm font-medium text-gray-700">Estado del Equipo</label>
-                <input type="text" name="status" id="status" value={formData.status} onChange={handleChange} className='w-full text-black py-2 my-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500' />
-              </div>
-
-              <div className="mt-4">
-                <label htmlFor="image" className="block text-sm font-medium text-gray-700">Subir Imagen del Equipo</label>
-                <div className="mt-2 flex justify-center rounded-md border-2 border-dashed border-gray-300 p-6">
-                  <div className="text-center">
-                    <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                      <path d="M12 16l6 6m0 0l6-6m-6 6V4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M6 12h36M6 36h36" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    <div className="mt-4 flex text-sm text-gray-600">
-                      <label htmlFor="image" className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                        <span>Subir un archivo</span>
-                        <input id="image" name="image" type="file" className="sr-only" onChange={handleFileChange} />
-                      </label>
-                      <p className="pl-1">o arrastra y suelta</p>
-                    </div>
-                    <p className="text-xs text-gray-500">PNG, JPG, GIF hasta 10MB</p>
-                  </div>
-                </div>
+                <label htmlFor="description" className="block text-sm font-medium text-gray-700">Descripción del Problema</label>
+                <textarea id="description" name="description" value={formData.description} onChange={handleChange} className='w-full text-black py-2 my-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500' rows="4"></textarea>
               </div>
             </div>
 
-            <div className="mt-8">
-              <h2 className="text-lg font-semibold">Información del Cliente</h2>
-              <p className="text-sm text-gray-600">Por favor complete la información de contacto para que podamos comunicarnos con usted.</p>
+            <div className="border-b border-gray-200 py-8">
+              <h2 className="text-lg font-semibold">Información del Solicitante</h2>
+              <p className="text-sm text-gray-600">Por favor, introduzca su información de contacto.</p>
 
               <div className="mt-4">
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700">Nombre</label>
@@ -247,13 +250,13 @@ function Form() {
               </div>
 
               <div className="mt-4">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
                 <input type="email" name="email" id="email" value={formData.email} onChange={handleChange} className='w-full text-black py-2 my-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500' />
               </div>
 
               <div className="mt-4">
                 <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Teléfono</label>
-                <input type="text" name="phone" id="phone" value={formData.phone} onChange={handleChange} className='w-full text-black py-2 my-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500' />
+                <input type="tel" name="phone" id="phone" value={formData.phone} onChange={handleChange} className='w-full text-black py-2 my-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500' />
               </div>
 
               <div className="mt-4">
@@ -267,11 +270,25 @@ function Form() {
               </div>
             </div>
 
+            <div className="mt-4">
+                <label htmlFor="status" className="block text-sm font-medium text-gray-700">Estatus</label>
+                <select id="status" name="status" value={formData.status} onChange={handleChange} className='w-full text-black py-2 my-2 px-4 bg-transparent border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-indigo-500'>
+                  <option value="">Seleccionar</option>
+                    <option key="Pendiente" value="pendiente">Pendiente</option>
+                </select>
+              </div>
+
+            <div className="py-8">
+              <h2 className="text-lg font-semibold">Imagen del Producto</h2>
+              <p className="text-sm text-gray-600">Puede adjuntar una imagen del producto para que tengamos una mejor idea.</p>
+
+              <div className="mt-4">
+                <input type="file" name="image" id="image" onChange={handleFileChange} className="text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" />
+              </div>
+            </div>
+
             <div className="mt-8">
-              <button 
-                type="submit" 
-                disabled={isSubmitting}
-                className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${isSubmitting ? 'bg-gray-400' : 'bg-indigo-600 hover:bg-indigo-700'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}>
+              <button type="submit" className="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-150" disabled={isSubmitting}>
                 {isSubmitting ? 'Enviando...' : 'Enviar Solicitud'}
               </button>
             </div>
@@ -279,31 +296,18 @@ function Form() {
         </form>
 
         {showModal && (
-          <div id="hs-basic-modal" className={`fixed inset-0 z-50 overflow-y-auto hidden`}>
-            <div className="flex items-center justify-center min-h-screen px-4 text-center sm:block sm:p-0">
-              <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-                <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-              </div>
-
-              <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">​</span>
-
-              <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                  <div className="sm:flex sm:items-start">
-                    <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                      <h3 className="text-lg leading-6 font-medium text-gray-900">{message.type === 'success' ? 'Éxito' : 'Error'}</h3>
-                      <div className="mt-2">
-                        <p className="text-sm text-gray-500">{message.text}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                  <button onClick={handleModalClose} className="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                    Ver servicio
-                  </button>
-                </div>
-              </div>
+          <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-50">
+            <div className="bg-white p-6 rounded-lg shadow-lg">
+              <h2 className={`text-lg font-semibold ${message.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+                {message.type === 'success' ? 'Éxito' : 'Error'}
+              </h2>
+              <p className="mt-4">{message.text}</p>
+              <button
+                onClick={handleModalClose}
+                className="mt-6 py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-150"
+              >
+                Cerrar
+              </button>
             </div>
           </div>
         )}

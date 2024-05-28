@@ -14,7 +14,7 @@ function User() {
     phone: "",
     address: "",
     reference: "",
-    urlAvatar: "/profile.pn
+    urlAvatar: "/profile.png"
   });
 
   const [passwordData, setPasswordData] = useState({

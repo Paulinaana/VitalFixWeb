@@ -13,6 +13,7 @@ export interface SearchManufacturerProps {
 }
 
 export interface ProductCardProps{
+    id: string;
     title: string;
     image: string;
     alt: string;
@@ -20,11 +21,10 @@ export interface ProductCardProps{
 }
 
 export interface ProductDetailProps{
+    id: string;
     title: string;
-    category: string;
     image: string;
     alt: string;
     description: string;
-    price: string;
 
 }

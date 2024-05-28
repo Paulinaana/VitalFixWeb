@@ -1,198 +1,69 @@
-import { CustomButton, CustomFilter, SearchBar, ProductCard } from '@/components'
-import Image from 'next/image'
-import React from 'react'
-import Link from "next/link";
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { CustomButton, CustomFilter, SearchBar, ProductCard } from '@/components';
 
 
 function catalog(){
-  return (
-    <div className='w-full h-screen flex items-start flex-1 pt-36 '>
-        <div className='mt-12 padding-x padding-y max-width' id="discover">
-            <div className='home__text-container'>
-                <h1 className='text-4xl font-extrabold'>Servicio de Mantenimiento</h1>
-                {/* <p>Detalles y revisión</p> */}
+    const [products, setProducts] = useState([]);
 
-                <div className='home__filters'>
-                    <SearchBar />
-                
-                <div className='flex flex-row'>
-                    <input type='text' placeholder='Escribe ' className='w-80 border-r-2' />
-                    <CustomButton
-                        title='Buscar'
-                        containerStyles='w-full py-[16px] rounded-full bg-primary-blue text-white' 
-                        />
+    useEffect(() => {
+        const fetchProducts = async () => {
+            const token = localStorage.getItem('token');
+            console.log(token);
+            if (!token) {
+              console.error('No token found');
+              return;
+            }
+            try {
+                const response = await axios.get('https://back-vitalfix.onrender.com/api/v1/equips', {
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  });
+                setProducts(response.data);
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
+        };
 
-                </div>
-                </div>
+        fetchProducts();
+    }, []);
 
-                <section>
-                      <div className='home__cars-wrapper'>
-                        <ProductCard title='Ultrasonido' image='/ultrasonido.jpg' alt='Ultrasonido' redirect='/productDetail' />
-                        <ProductCard title='Ultrasonido' image='/ultrasonido.jpg' alt='Ultrasonido' redirect='/productDetail' />
-                        <ProductCard title='Ultrasonido' image='/ultrasonido.jpg' alt='Ultrasonido' redirect='/productDetail' />
-
-                            
-  
-                        <div className="car-card group">
-                            <div className="car-card__content">
-                                <h2 className="car-card__content-title">
-                                Monitor de Paciente
-                                </h2>
-                            </div>
-
-                            {/* <p className='flex mt-6 text-[32px] leading-[38px] font-extrabold'>
-                                <span className='self-start text-[14px] leading-[17px] font-semibold'>$</span>
-                                {carRent}
-                                <span className='self-end text-[14px] leading-[17px] font-medium'>/day</span>
-                            </p> */}
-
-                            <div className='relative w-full h-40 my-3 object-contain'>
-                                <Image src="/monitor.jpg" alt='ultrasonido' fill priority className='object-contain' />
-                            </div>
-
-                            <div className='relative flex w-full mt-2'>
-                                <div className='flex group-hover:invisible w-full justify-between text-grey'>
-                                <div className='flex flex-col justify-center items-center gap-2 mb-12'>
-                                    {/* <Image src='/steering-wheel.svg' width={20} height={20} alt='steering wheel' /> */}
-                                    <p className='text-[14px] leading-[17px]'>
-                                    Detalles y revisión
-                                    {/* {transmission === "a" ? "Automatic" : "Manual"} */}
-                                    </p>
-                                </div>
-                                <div className="car-card__icon">
-                                    {/* <Image src="/tire.svg" width={20} height={20} alt="seat" /> */}
-                                    {/* <p className="car-card__icon-text">{drive.toUpperCase()}</p> */}
-                                </div>
-                                <div className="car-card__icon">
-                                    {/* <Image src="/gas.svg" width={20} height={20} alt="seat" /> */}
-                                    {/* <p className="car-card__icon-text">{city_mpg} MPG</p> */}
-                                </div>
-                                </div>
-
-                                <div className="car-card__btn-container">
-                                <Link className='w-full py-[16px] rounded-full bg-primary-blue text-white pl-20 mt-10' href="/productDetail">Ver mas </Link>
-                                {/* <a className="w-full py-[16px] rounded-full bg-primary-blue text-white pl-20 mt-5" href="/productDetail">Ver mas</a> */}
-
-                                {/* <CustomButton
-                                    title='Ver mas'
-                                    containerStyles='w-full py-[16px] rounded-full bg-primary-blue text-white'
-                                    // textStyles='text-white text-[14px] leading-[17px] font-bold'
-                                    // rightIcon='/right-arrow.svg'
-                                
-                                /> */}
-                                </div>
-                            </div>
-
+    return (
+        <div className='w-full min-h-screen flex items-start pt-36 pb-10 bg-gray-100'>
+            <div className='mt-12 padding-x padding-y max-width' id="discover">
+                <div className='home__text-container'>
+                    <h1 className='text-4xl font-extrabold'>Servicio de Mantenimiento</h1>
+                    <div className='home__filters'>
+                        <SearchBar />
+                        <div className='flex flex-row'>
+                            <input type='text' placeholder='Escribe ' className='w-80 border-r-2' />
+                            <CustomButton
+                                title='Buscar'
+                                containerStyles='w-full py-[16px] rounded-full bg-primary-blue text-white'
+                            />
                         </div>
-                        <div className="car-card group">
-                            <div className="car-card__content">
-                                <h2 className="car-card__content-title">
-                                Incubadora neonatal
-                                </h2>
-                            </div>
-
-                            {/* <p className='flex mt-6 text-[32px] leading-[38px] font-extrabold'>
-                                <span className='self-start text-[14px] leading-[17px] font-semibold'>$</span>
-                                {carRent}
-                                <span className='self-end text-[14px] leading-[17px] font-medium'>/day</span>
-                            </p> */}
-
-                            <div className='relative w-full h-40 my-3 object-contain'>
-                                <Image src="/incubadora.jpg" alt='ultrasonido' fill priority className='object-contain' />
-                            </div>
-
-                            <div className='relative flex w-full mt-2'>
-                                <div className='flex group-hover:invisible w-full justify-between text-grey'>
-                                <div className='flex flex-col justify-center items-center gap-2'>
-                                    {/* <Image src='/steering-wheel.svg' width={20} height={20} alt='steering wheel' /> */}
-                                    <p className='text-[14px] leading-[17px]'>
-                                    Detalles y revisión
-                                    {/* {transmission === "a" ? "Automatic" : "Manual"} */}
-                                    </p>
-                                </div>
-                                <div className="car-card__icon">
-                                    {/* <Image src="/tire.svg" width={20} height={20} alt="seat" /> */}
-                                    {/* <p className="car-card__icon-text">{drive.toUpperCase()}</p> */}
-                                </div>
-                                <div className="car-card__icon">
-                                    {/* <Image src="/gas.svg" width={20} height={20} alt="seat" /> */}
-                                    {/* <p className="car-card__icon-text">{city_mpg} MPG</p> */}
-                                </div>
-                                </div>
-
-                                <div className="car-card__btn-container">
-                                <a className="w-full py-[16px] rounded-full bg-primary-blue text-white pl-20 mt-5" href="/productDetail">Ver mas</a>
-
-                                {/* <CustomButton
-                                    title='Ver mas'
-                                    containerStyles='w-full py-[16px] rounded-full bg-primary-blue text-white'
-                                    // textStyles='text-white text-[14px] leading-[17px] font-bold'
-                                    // rightIcon='/right-arrow.svg'
-                                
-                                /> */}
-                                </div>
-                            </div>
-
-                        </div>
-                        <div className="car-card group">
-                            <div className="car-card__content">
-                                <h2 className="car-card__content-title">
-                                Ultrasonido
-                                </h2>
-                            </div>
-
-                            {/* <p className='flex mt-6 text-[32px] leading-[38px] font-extrabold'>
-                                <span className='self-start text-[14px] leading-[17px] font-semibold'>$</span>
-                                {carRent}
-                                <span className='self-end text-[14px] leading-[17px] font-medium'>/day</span>
-                            </p> */}
-
-                            <div className='relative w-full h-40 my-3 object-contain'>
-                                <Image src="/ultrasonido.jpg" alt='ultrasonido' fill priority className='object-contain' />
-                            </div>
-
-                            <div className='relative flex w-full mt-2'>
-                                <div className='flex group-hover:invisible w-full justify-between text-grey'>
-                                <div className='flex flex-col justify-center items-center gap-2'>
-                                    {/* <Image src='/steering-wheel.svg' width={20} height={20} alt='steering wheel' /> */}
-                                    <p className='text-[14px] leading-[17px]'>
-                                    Detalles y revisión
-                                    {/* {transmission === "a" ? "Automatic" : "Manual"} */}
-                                    </p>
-                                </div>
-                                <div className="car-card__icon">
-                                    {/* <Image src="/tire.svg" width={20} height={20} alt="seat" /> */}
-                                    {/* <p className="car-card__icon-text">{drive.toUpperCase()}</p> */}
-                                </div>
-                                <div className="car-card__icon">
-                                    {/* <Image src="/gas.svg" width={20} height={20} alt="seat" /> */}
-                                    {/* <p className="car-card__icon-text">{city_mpg} MPG</p> */}
-                                </div>
-                                </div>
-
-                                <div className="car-card__btn-container">
-                                <a className="w-full py-[16px] rounded-full bg-primary-blue text-white pl-20 mt-5" href="/productDetail">Ver mas</a>
-
-                                {/* <CustomButton
-                                    title='Ver mas'
-                                    containerStyles='w-full py-[16px] rounded-full bg-primary-blue text-white'
-                                    // textStyles='text-white text-[14px] leading-[17px] font-bold'
-                                    // rightIcon='/right-arrow.svg'
-                                
-                                /> */}
-                                </div>
-                            </div>
-
-                        </div>
-                        
-
                     </div>
-                </section>
-
+                    <section>
+                        <div className='home__cars-wrapper'>
+                            {products.map((product) => (
+                                <ProductCard
+                                    key={product.id}
+                                    id={product.id}
+                                    title={product.name}
+                                    image={product.urlImagen || '/ultrasonido.jpg'}
+                                    alt={product.name}
+                                    redirect='/productDetail'
+                                />
+                            ))}
+                        </div>
+                    </section>
+                </div>
             </div>
         </div>
-    </div>
-  )
+    );
 }
 
 export default catalog

@@ -1,52 +1,130 @@
-import { CustomButton, CustomFilter, SearchBar } from '@/components'
-import Image from 'next/image'
-import React from 'react'
+"use client"
+import { CustomButton, CustomFilter, SearchBar } from '@/components';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 function serviceInfo(){
+    const userId = localStorage.getItem('userId');
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const request_id = searchParams.get('id');
+    console.log("eeee", request_id)
+    const [user, setUser] = useState({
+        name: "",
+        email: "",
+        urlAvatar: "",
+    });
+
+    const [requests, setRequests] = useState([]);
+
+    const handleProfile = () => {
+        router.push('/user');
+    }
+    
+    const handleService = () => {
+        router.push('/service');
+    }
+
+    const handleReclaim = () => {
+        router.push('/reclaim');
+    }
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            const userId = localStorage.getItem('userId');
+            console.log(userId)
+            if (userId) {
+                try {
+                    const response = await fetch(`https://back-vitalfix.onrender.com/api/v1/users/${userId}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        }
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        setUser({
+                            name: data.name,
+                            email: data.email,
+                            urlAvatar: data.urlAvatar || "/profile.png"
+                        });
+                    } else {
+                        console.error('Failed to fetch user data');
+                    }
+                } catch (error) {
+                    console.error('Error fetching user data:', error);
+                }
+            }
+        };
+
+        const fetchRequests = async () => {
+            console.log(localStorage.getItem('token'))
+            try {
+                const response = await fetch(`https://back-vitalfix.onrender.com/api/v1/requests/${request_id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log("ejele el data")
+                    console.log(data)
+                    setRequests(data);
+                    console.log(setRequests)
+                    console.log(requests)
+
+                } else {
+                    console.error('Failed to fetch requests');
+                }
+            } catch (error) {
+                console.error('Error fetching requests:', error);
+            }
+        };
+        console.log(requests)
+        fetchUserData();
+        fetchRequests();
+    }, []);
+
   return (
-<div className="flex">
-    <aside className="flex flex-col w-64 h-screen px-5 py-20 bg-gray-100 border-r rtl:border-r-0 rtl:border-l ">
-        <a href="#">
-            {/* <img className="w-auto h-6 sm:h-7" src="https://merakiui.com/images/full-logo.svg" alt=""> */}
-        </a>
-
-        <div className="flex flex-col items-center mt-16 -mx-2">
-            {/* <img className="object-cover w-24 h-24 mx-2 rounded-full" src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="avatar"> */}
-            <h4 className="mx-2 mt-2 font-medium text-gray-800 ">John Doe</h4>
-            <p className="mx-2 mt-1 text-sm font-medium text-gray-800 ">john@example.com</p>
-        </div>
-
-        <div className="flex flex-col justify-between flex-1 mt-6">
-            <nav >
-
-                <a className="flex items-center px-4 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg  hover:bg-blue-700 hover:text-gray-100" href="#">
+    <div className="flex">
+        <aside className="flex flex-col w-64 px-5 py-20 bg-gray-100 border-r h-screen">
+                <div className="flex flex-col items-center mt-16 -mx-2">
+                    <Image
+                        className="object-cover w-24 h-24 mx-2 rounded-full"
+                        src={user.urlAvatar || '/profile.png'}
+                        alt="User Avatar"
+                        width={96}
+                        height={96}
+                    />
+                    <h4 className="mx-2 mt-2 font-medium text-gray-800">{user.name}</h4>
+                    <p className="mx-2 mt-1 text-sm font-medium text-gray-800">{user.email}</p>
+                </div>
+                <div className="flex flex-col justify-between flex-1 mt-6">
+                <nav>
+                    <a className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg hover:bg-blue-700 hover:text-gray-100" href="#">
                     <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-
-                    <span className="mx-4 font-medium">Perfil</span>
-                </a>
-
-                <a className="flex items-center px-4 py-2 mt-5 text-gray-100 bg-blue-700 rounded-lg" href="#">
+                    <span className="mx-4 font-medium" onClick={handleProfile}>Perfil</span>
+                    </a>
+                    <a className="flex items-center px-4 py-2 mt-5 text-gray-100 bg-blue-700 rounded-lg" href="#">
                     <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M19 11H5M19 11C20.1046 11 21 11.8954 21 13V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V13C3 11.8954 3.89543 11 5 11M19 11V9C19 7.89543 18.1046 7 17 7M5 11V9C5 7.89543 5.89543 7 7 7M7 7V5C7 3.89543 7.89543 3 9 3H15C16.1046 3 17 3.89543 17 5V7M7 7H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-
-                    <span className="mx-4 font-medium">Servicios</span>
-                </a>
-
-                <a className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg hover:bg-blue-700 hover:text-gray-100" href="#">
+                    <span className="mx-4 font-medium" onClick={handleService}>Servicios</span>
+                    </a>
+                    <a className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg hover:bg-blue-700 hover:text-gray-100" href="#">
                     <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15 5V7M15 11V13M15 17V19M5 5C3.89543 5 3 5.89543 3 7V10C4.10457 10 5 10.8954 5 12C5 13.1046 4.10457 14 3 14V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V14C19.8954 14 19 13.1046 19 12C19 10.8954 19.8954 10 21 10V7C21 5.89543 20.1046 5 19 5H5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-
-                    <span className="mx-4 font-medium">Reclamos</span>
-                </a>
-
-            </nav>
-        </div>
-    </aside>
+                                <path d="M15 5V7M15 11V13M15 17V19M5 5C3.89543 5 3 5.89543 3 7V10C4.10457 10 5 10.8954 5 12C5 13.1046 4.10457 14 3 14V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V14C19.8954 14 19 13.1046 19 12C19 10.8954 19.8954 10 21 10V7C21 5.89543 20.1046 5 19 5H5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                    <span className="mx-4 font-medium" onClick={handleReclaim}>Reclamos</span>
+                    </a>
+                </nav>
+                </div>
+            </aside>
 
         
 
@@ -299,7 +377,7 @@ function serviceInfo(){
             <span className="sr-only">Fecha</span>
             <span className="mx-2 text-gray-400" aria-hidden="true">&middot;</span>
             </dt>
-            <dd className="font-medium text-gray-900"><time dateTime="2021-03-22">Mayo 22, 2024</time></dd>
+            <dd className="font-medium text-gray-900"><time dateTime="2021-03-22">{requests.createdAt}</time></dd>
         </dl>
         <div className="mt-4 sm:mt-0">
             {/* <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
@@ -313,7 +391,7 @@ function serviceInfo(){
                 <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
                 <path d="m9 12 2 2 4-4"></path>
                 </svg>
-                Connected
+                {requests.status}
             </span>
             </div>
         </div>
@@ -342,24 +420,23 @@ function serviceInfo(){
                 <a href="#">Monitor Vital</a>
                 </h3>
                 <p className="mt-1 font-medium text-blue-600">Mantenimiento</p>
-                <p className="mt-1 font-medium text-gray-900">$55.00</p>
-                <p className="mt-3 text-gray-500">Informacion de la solicitud del servicio del equipo medico.</p>
+                <p className="mt-1 font-medium text-gray-900">$66</p>
+                <p className="mt-3 text-gray-500">{requests.details}</p>
             </div>
             <div className="sm:col-span-12 md:col-span-7">
                 <dl className="grid grid-cols-1 gap-y-8 border-b border-gray-200 py-8 sm:grid-cols-2 sm:gap-x-6 sm:py-6 md:py-10">
                 <div>
                     <dt className="font-medium text-gray-900">Direccion del servicio</dt>
                     <dd className="mt-3 text-gray-500">
-                    <span className="block">Residencia Sol</span>
-                    <span className="block">Calle 55 con 12</span>
-                    <span className="block">Venezuela, Barquisimeto</span>
+                    <span className="block">{requests.address}</span>
+                    
                     </dd>
                 </div>
                 <div>
                     <dt className="font-medium text-gray-900">Datos del cliente</dt>
                     <dd className="mt-3 space-y-3 text-gray-500">
-                    <p>fake@example.com</p>
-                    <p>1245346540</p>
+                    <p>{requests.email}</p>
+                    <p>{requests.phone}</p>
                     </dd>
                 </div>
                 </dl>
